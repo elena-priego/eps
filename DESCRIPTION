@@ -1,0 +1,28 @@
+Package: eps
+Title: Helper functions for my analysis
+Version: 0.1.1
+Date: 2021-07-27
+Author: 
+    person(given = "Elena",
+           family = "Priego",
+           role = c("aut", "cre"),
+           email = "epriego@cnic.com",
+           comment = c(ORCID = "0000-0002-7560-0620"))
+Maintainer: Elena Priego Saiz <elena.priego.saiz@gmail.com>
+Description: R package with miscellaneous R functions that are 
+    useful to me.
+Depends:
+    R (>= 3.5.0)
+Suggests: 
+    knitr,
+    rmarkdown
+Imports:
+    tidyverse,
+    readxl,
+    here
+Encoding: UTF-8
+License: GPL-3
+LazyData: FALSE
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+VignetteBuilder: knitr
