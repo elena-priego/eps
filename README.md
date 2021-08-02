@@ -20,6 +20,7 @@ A copy of the GNU General Public License, version 3, is available at https://www
 - `devtools::document()` to generate the Rd and update NAMESPACE  
 - `devtools::build()` to generate the package  
 - `devtools::check()` to look for errors and warnings  
+- `use_data(object, eps, overwrite = TRUE)` to save an object in data. There's need to create an R file with Roxygen documentation.
 
 ## check output
 > devtools::check()
