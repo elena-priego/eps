@@ -70,17 +70,19 @@ facs_tidytable <-
       separate("stat2", into = c("stat", "marker"), sep = "\\(") %>%
       mutate(marker = replace_na(marker, "freq")) %>%
       mutate(mice = str_replace_all(mice, ".fcs", "")) %>%
-      mutate_all(trimws) %>%
+      mutate_all(trimws)
+    genotype <- get_genotype(animalario_file, path_raw, micecode)
+    tidy <- left_join(tidy, genotype, by = "mice")
+    tidy <- tidy %>%
       mutate(
         value = as.numeric(value),
         organ = as.factor(organ),
         mice = as.factor(mice),
         cell = as.factor(cell),
         stat = as.factor(stat),
-        marker = as.factor(marker)
+        marker = as.factor(marker),
+        genotype = as.factor(genotype)
       )
-    genotype <- get_genotype(animalario_file, path_raw, micecode)
-    tidy <- left_join(tidy, genotype, by = "mice")
     return(tidy)
   }
 
