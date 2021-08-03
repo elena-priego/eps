@@ -27,7 +27,8 @@
 
 
 get_genotype <-
-  function(file_name = c("^animalario", "$csv"), path_raw,
+  function(file_name = c("^animalario", "$csv"),
+           path_raw,
            micecode) {
     filenames <- list.files(pattern = c("^animalario", "$csv"), path = path_raw)
     filenames <- here::here(path_raw, filenames)
