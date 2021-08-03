@@ -10,6 +10,8 @@
 #'
 #' @param file .xls generated from Flowjo with cell percentages and fluorescent
 #'  intensities
+#' @param path_data path where file is located. Usually path_data from
+#' path_builder()
 #' @param animalario_file raw csv downloaded from animalario with mice used in
 #'  the experiment
 #' @param gate_pattern named list with the replacements desired for the gates.
@@ -24,6 +26,7 @@
 #' @import readxl
 #' @import tidyverse
 #' @import usethis
+#' @import here
 #'
 #' @return a tibble with the tidy format
 #' @export
@@ -31,15 +34,18 @@
 #' @examples
 #' data(gate_pattern)
 #' data(micecode)
-#' facs_tidytable("table.xls", "animalario.csv", gate_pattern = gate_pattern,
-#'     micecode = micecode)
+#' facs_tidytable("table.xls", path_data, "animalario.csv",
+#'     gate_pattern = gate_pattern, micecode = micecode)
 #'
 #'
 facs_tidytable <-
   function(file,
+           path_data,
            animalario_file,
            gate_pattern,
            micecode) {
+    file <- "Table.xls"
+    file <- here::here(path_data, file)
     tidy <- readxl::read_excel(file)
     tidy <- sapply(tidy[], function(y)
       as.character(y))
@@ -50,8 +56,8 @@ facs_tidytable <-
       sub("%", "", y))
     names(tidy) <- str_replace_all(names(tidy), gate_pattern)
     tidy <- tidy %>%  pivot_longer(cols = -"...1",
-                             names_to = "statistic",
-                             values_to = "value") %>%
+                                   names_to = "statistic",
+                                   values_to = "value") %>%
       separate("...1",
                into = c("organ", "mice"),
                sep = "_") %>%
@@ -60,6 +66,7 @@ facs_tidytable <-
                sep = "\\|") %>%
       separate("stat2", into = c("stat", "marker"), sep = "\\(") %>%
       mutate(marker = replace_na(marker, "freq")) %>%
+      mutate(mice = str_replace_all(mice, ".fcs", "")) %>%
       mutate_all(trimws) %>%
       mutate(
         value = as.numeric(value),
@@ -70,7 +77,7 @@ facs_tidytable <-
         marker = as.factor(marker)
       )
     genotype <- get_genotype(animalario_file, micecode)
-    tidy <- left_join(tidy, genotype)
+    tidy <- left_join(tidy, genotype, by = "mice")
     return(tidy)
   }
 
