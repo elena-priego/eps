@@ -19,6 +19,8 @@
 #' Common ones are: c("Lymphocytes/Single Cells/Single Cells/CD452/" = "",
 #' "Freq. of Parent" = "Freq.", "Freq. of Grandparent" = "Freq.",
 #' "Geometric Mean" = "GMFI", "Median" = "MdFI", "\\)" = "")
+#' @param path_raw path where animalario file to obtain the genotypes is
+#' located. usually path_raw from path_builder.
 #' @param micecode named list with the replacement for the genotypes.
 #' Load from micecode data included in the package.
 
@@ -43,6 +45,7 @@ facs_tidytable <-
            path_data,
            animalario_file,
            gate_pattern,
+           path_raw,
            micecode) {
     file <- "Table.xls"
     file <- here::here(path_data, file)
@@ -76,7 +79,7 @@ facs_tidytable <-
         stat = as.factor(stat),
         marker = as.factor(marker)
       )
-    genotype <- get_genotype(animalario_file, micecode)
+    genotype <- get_genotype(animalario_file, path_raw, micecode)
     tidy <- left_join(tidy, genotype, by = "mice")
     return(tidy)
   }
