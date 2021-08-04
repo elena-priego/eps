@@ -20,7 +20,11 @@
 #' lower than 0.05 in result folder
 #' @export
 #'
-#' @examples facs_ttest(table)
+#' @examples
+#' table1 <- filter(genotype %in% c("VHL-HIF1a-KO  ", "VHL-HIF1a-WT  "))
+#' facs_ttest(table1,
+#'            file1 = "HIF1a-DKO-t.test.csv",
+#'            file2 = "HIF1a-DKO-significant-t-test.csv")
 facs_ttest <-
   function(table,
            file1 = "t-test.csv",
