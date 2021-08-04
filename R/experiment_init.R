@@ -1,6 +1,6 @@
 #' Initialize the experiment
 #'
-#' Generate the folders associated to the experiment in data, raw and result.
+#' Generate the folders associated to the experiment in data, raw and output.
 #' Creation of the cover page in an Rmd to write the protocol and the analysis.
 #' Should be used directly in the console within the project folder
 #'
@@ -17,7 +17,7 @@
 experiment_init <- function(experiment_name) {
   dir.create(here::here("data", experiment_name), showWarnings = FALSE)
   dir.create(here::here("raw", experiment_name), showWarnings = FALSE)
-  dir.create(here::here("result", experiment_name), showWarnings = FALSE)
+  dir.create(here::here("output", experiment_name), showWarnings = FALSE)
   yalm <- paste(
     "---",
     paste0("title: ", experiment_name),
@@ -51,7 +51,7 @@ experiment_init <- function(experiment_name) {
     "   message = FALSE,",
     "   warning = FALSE,",
     '   fig.align = "center",',
-    '   fig.path = file.path(path_result, "plots"),',
+    '   fig.path = file.path(path_output),',
     '   fig.pos = "H",',
     "   dpi = 300",
     ")",

@@ -1,7 +1,7 @@
 #' Initialize the experiment creating the needed pathways
 #'
 #' Generate the pathways to save the files of the projects and create specific
-#' folders in data, raw and result. The pathways are saved in R environment to
+#' folders in data, raw and output. The pathways are saved in R environment to
 #' be used along the analysis
 #'
 #'
@@ -21,8 +21,8 @@ path_builder <- function(experiment_name){
   path_doc <<- here::here("doc")
   path_raw <<- here::here("raw", experiment_name)
   dir.create(path_raw, showWarnings = FALSE)
-  path_result <<- here::here("result", experiment_name)
-  dir.create(path_result, showWarnings = FALSE)
+  path_output <<- here::here("output", experiment_name)
+  dir.create(path_output, showWarnings = FALSE)
   path_src <<- here::here("src")
 }
 
