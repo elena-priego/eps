@@ -16,8 +16,8 @@
 #'  the experiment
 #' @param gate_pattern named list with the replacements desired for the gates.
 #' Load from gate_pattern data included in the package.
-#' Common ones are: c("Lymphocytes/Single Cells/Single Cells/CD452/" = "",
-#' "Freq. of Parent" = "Freq.", "Freq. of Grandparent" = "Freq.",
+#' Common ones are: c("Freq. of Parent" = "Freq.",
+#' "Freq. of Grandparent" = "Freq.",
 #' "Geometric Mean" = "GMFI", "Median" = "MdFI", "\\)" = "")
 #' @param path_raw path where animalario file to obtain the genotypes is
 #' located. usually path_raw from path_builder.
@@ -70,6 +70,7 @@ facs_tidytable <-
       separate("stat2", into = c("stat", "marker"), sep = "\\(") %>%
       mutate(marker = replace_na(marker, "freq")) %>%
       mutate(mice = str_replace_all(mice, ".fcs", "")) %>%
+      mutate(cell = sub(".*/", "", cell)) %>%
       mutate_all(trimws)
     genotype <- get_genotype(animalario_file, path_raw, micecode)
     tidy <- left_join(tidy, genotype, by = "mice")
