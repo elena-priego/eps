@@ -16,9 +16,8 @@
 #' The values will be matched in order (usually alphabetical).
 #' @param color_breaks takes the limits as input and returns breaks as output
 #' @param color_labels takes the breaks as input and returns labels as output
-#' @param output name of the generated plot
-#' @param path_output path were the plot will be saved. Recommended path_output
-#' from path_builder()
+#' @param path_output ful name of the generated plot including the path
+#' (recommended path_output from path_builder())
 #' @param w width of the output plot
 #' @param h high of the output plot
 #'
@@ -30,12 +29,15 @@
 #' @export
 #'
 #' @examples
-#' comb <- as_tibble(unique(paste(table$organ, table$stat, table$marker))) %>%
-#'   separate(value, into = c("organ", "stat", "marker"), sep = "\\s+") %>%
-#'   mutate(output = paste0(organ, "_", stat, "_", marker, ".png"),
-#'          y_lab = paste0(marker, " (", stat, ")")) %>% as.data.frame()
+#' comb <- as_tibble(unique(paste(table$organ, table$stat, table$marker,
+#'                                sep = "_-_"))) %>%
+#'         separate(value, into = c("organ", "stat", "marker"), sep = "_-_") %>%
+#'         mutate(output = here(path_output,
+#'                              paste0(organ, "_", stat, "_", marker, ".png")),
+#'                y_lab = paste0(marker, " (", stat, ")")) %>% as.data.frame()
+#'
 #' apply(comb, 1, function(x) facs_boxplot(table, organ.i = x[1], stat.i = x[2],
-#'   marker.i = x[3], output = x[4], path_output = path_output, y_lab = x[5],
+#'   marker.i = x[3], path_output = x[4], y_lab = x[5],
 #'   title.i = x[1]))
 
 
@@ -53,11 +55,10 @@ facs_boxplot <-
            color_values = RColorBrewer::brewer.pal(8, "Paired")[7:8],
            color_breaks = waiver(),
            color_labels = waiver(),
-           output = "plot.png",
            path_output = path_output,
            w = 5,
            h = 5) {
-    table.i %>%
+    table %>%
       filter(organ == organ.i) %>%
       filter(stat == stat.i) %>%
       filter(marker == marker.i) %>%
@@ -91,7 +92,7 @@ facs_boxplot <-
         values = color_values,
         name = "Genotype:",
         breaks = color_breaks,
-        labels = color_labels,
+        labels = color_labels
       ) +
       ggsave(
         file = path_output,
