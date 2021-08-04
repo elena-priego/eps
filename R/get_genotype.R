@@ -1,8 +1,10 @@
 #' Generate an object matching miceID with their genotype
 #'
 #' Extract mice number and genotype from multiple files
-#' animalario*.csv pattern as default download
-#' micecode as union from Mote with Genotipado -> stored in data
+#' animalario*.csv pattern as default download in english layout
+#' NOTE: take a look to determine if the first row is indicating sep=";"
+#' and remove in that case.
+#' micecode as union from Nickname with Genotyping -> stored in data
 #'
 #' @param file_name Input file
 #' @param path_raw path were the file is located. Usually in the experiment
@@ -36,17 +38,16 @@ get_genotype <-
       do.call("rbind", lapply(
         filenames,
         FUN = function(files) {
-          read.delim(files, sep = ",", fileEncoding = "latin1")
+          read.delim(files, sep = ";")
         }
       ))
     dataset <-
       dataset[!apply(is.na(dataset) | dataset == "", 1, all), ]
     filtered_dataset <- dataset  %>%
       mutate(
-        mice = Código,
-        full_genotype = paste(Mote, Genotipado),
-        genotype = str_replace_all(full_genotype, micecode)
-      ) %>%
+        mice = Code,
+        full_genotype = paste(Nickname, Genotyping),
+        genotype = str_replace_all(full_genotype, micecode)) %>%
       select(mice, genotype)
     return(filtered_dataset)
   }
