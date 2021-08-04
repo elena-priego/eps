@@ -3,12 +3,14 @@
 #' t-test analysis for data coming in a tidy format from facs_tidytable
 #' function.
 #'
-#' @param table name of the table to be analyzed
+#' @param table name of the table to be analyzed. Filter to make that genotype
+#' column contains only 2 factors
 #' @param file1 name of the file containing all the analysis
 #' @param file2 name of the file containing only the significant analysis
 #'
 #' @import here
 #' @import tidyverse
+#' @import broom
 #'
 #' @return print in the screen the significant values
 #' @return significant_values data table with the significant samples and their
@@ -24,9 +26,9 @@ facs_ttest <-
            file1 = "t-test.csv",
            file2 = "significant-t-test.csv") {
     stats <- table %>%
-      group_by(organ, cell, stat, marker)  %>%
-      summarise(ttest = list(t.test(value ~ genotype)))  %>%
-      mutate(ttest = map(ttest, tidy)) %>%
+      nest(data = c(mice, value, genotype))  %>%
+      mutate(ttest = map(data, ~ t.test(.$value ~ .$genotype)))  %>%
+      mutate(ttest = map(ttest, ~ tidy(.))) %>%
       unnest(cols = c(ttest)) %>%
       select(organ, cell, stat, marker, estimate, estimate1, estimate2, p.value)
     write.table(
