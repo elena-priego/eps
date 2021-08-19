@@ -4,20 +4,33 @@
 \alias{facs_tidytable}
 \title{Prepare the data in a tidy format from the data obtained in Flowjo}
 \usage{
-facs_tidytable(file, animalario_file, gate_pattern, micecode)
+facs_tidytable(
+  file,
+  path_data,
+  animalario_file,
+  gate_pattern,
+  path_raw,
+  micecode
+)
 }
 \arguments{
 \item{file}{.xls generated from Flowjo with cell percentages and fluorescent
 intensities}
+
+\item{path_data}{path where file is located. Usually path_data from
+path_builder()}
 
 \item{animalario_file}{raw csv downloaded from animalario with mice used in
 the experiment}
 
 \item{gate_pattern}{named list with the replacements desired for the gates.
 Load from gate_pattern data included in the package.
-Common ones are: c("Lymphocytes/Single Cells/Single Cells/CD452/" = "",
-"Freq. of Parent" = "Freq.", "Freq. of Grandparent" = "Freq.",
+Common ones are: c("Freq. of Parent" = "Freq.",
+"Freq. of Grandparent" = "Freq.",
 "Geometric Mean" = "GMFI", "Median" = "MdFI", "\\)" = "")}
+
+\item{path_raw}{path where animalario file to obtain the genotypes is
+located. usually path_raw from path_builder.}
 
 \item{micecode}{named list with the replacement for the genotypes.
 Load from micecode data included in the package.}
@@ -34,8 +47,8 @@ the full name of the mice.
 \examples{
 data(gate_pattern)
 data(micecode)
-facs_tidytable("table.xls", "animalario.csv", gate_pattern = gate_pattern,
-    micecode = micecode)
+facs_tidytable("table.xls", path_data, "animalario.csv",
+    gate_pattern = gate_pattern, micecode = micecode)
 
 
 }

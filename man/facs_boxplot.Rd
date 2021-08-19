@@ -16,7 +16,7 @@ facs_boxplot(
   color_values = RColorBrewer::brewer.pal(8, "Paired")[7:8],
   color_breaks = waiver(),
   color_labels = waiver(),
-  output = "plot.png",
+  path_output = path_output,
   w = 5,
   h = 5
 )
@@ -45,7 +45,8 @@ The values will be matched in order (usually alphabetical).}
 
 \item{color_labels}{takes the breaks as input and returns labels as output}
 
-\item{output}{name of the generated plot}
+\item{path_output}{ful name of the generated plot including the path
+(recommended path_output from path_builder())}
 
 \item{w}{width of the output plot}
 
@@ -60,10 +61,14 @@ Design to work inside an apply function with all the possible combinations of
 parameters in order to generate multiple plots (see examples).
 }
 \examples{
-comb <- as_tibble(unique(paste(table$organ, table$stat, table$marker))) \%>\%
-  separate(value, into = c("organ", "stat", "marker"), sep = "\\\\s+") \%>\%
-  mutate(output = paste0(organ, "_", stat, "_", marker, ".png"),
-         y_lab = paste0(marker, " (", stat, ")")) \%>\% as.data.frame()
-apply(comb, 1, function(x) facs_boxplot(table, organ.i=x[1], stat.i=x[2],
-  marker.i=x[3], output=x[4], y_lab=x[5], title.i = x[1]))
+comb <- as_tibble(unique(paste(table$organ, table$stat, table$marker,
+                               sep = "_-_"))) \%>\%
+        separate(value, into = c("organ", "stat", "marker"), sep = "_-_") \%>\%
+        mutate(output = here(path_output,
+                             paste0(organ, "_", stat, "_", marker, ".png")),
+               y_lab = paste0(marker, " (", stat, ")")) \%>\% as.data.frame()
+
+apply(comb, 1, function(x) facs_boxplot(table, organ.i = x[1], stat.i = x[2],
+  marker.i = x[3], path_output = x[4], y_lab = x[5],
+  title.i = x[1]))
 }

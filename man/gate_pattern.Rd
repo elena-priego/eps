@@ -7,7 +7,6 @@
 \format{
 Named list with the desired replacements
 }
-}
 \usage{
 gate_pattern
 }

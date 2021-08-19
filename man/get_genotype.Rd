@@ -4,10 +4,13 @@
 \alias{get_genotype}
 \title{Generate an object matching miceID with their genotype}
 \usage{
-get_genotype(file_name = c("^animalario", "$csv"), micecode)
+get_genotype(file_name = c("^animalario", "$csv"), path_raw, micecode)
 }
 \arguments{
 \item{file_name}{Input file}
+
+\item{path_raw}{path were the file is located. Usually in the experiment
+subfolder inside raw}
 
 \item{micecode}{Named chr list containing the replacement chr for the
 genotype. BBV, CCT, DCX and DCW strains can be loaded
@@ -19,8 +22,10 @@ their genotype
 }
 \description{
 Extract mice number and genotype from multiple files
-animalario*.csv pattern as default download
-micecode as union from Mote with Genotipado -> stored in data
+animalario*.csv pattern as default download in english layout
+NOTE: take a look to determine if the first row is indicating sep=";"
+and remove in that case.
+micecode as union from Nickname with Genotyping -> stored in data
 }
 \examples{
 data(micecode)
