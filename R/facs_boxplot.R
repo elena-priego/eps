@@ -42,7 +42,6 @@
 
 
 
-
 facs_boxplot <-
   function(table,
            organ.i,
@@ -56,9 +55,9 @@ facs_boxplot <-
            color_breaks = waiver(),
            color_labels = waiver(),
            path_output = path_output,
-           w = 5,
+           w = 10,
            h = 5) {
-    table %>%
+    p <- table %>%
       filter(organ == organ.i) %>%
       filter(stat == stat.i) %>%
       filter(marker == marker.i) %>%
@@ -79,12 +78,12 @@ facs_boxplot <-
       theme_clean(base_family = "sans", base_size = 18) +
       theme(
         strip.text.x = element_blank(),
-        legend.position = "top",
+        legend.position = "right",
         legend.background = element_rect(colour = "transparent",
                                          fill = "transparent"),
         legend.title = element_text(face = "plain", size = 15),
-        legend.text = element_text(size = 15),
-        axis.text.x = element_text(angle = 45, hjust = 1,),
+        legend.text = element_text(size = 10),
+        axis.text.x = element_text(angle = 45, hjust = 1, ),
         plot.background = element_rect(colour = NA,
                                        fill = "transparent")
       ) +
@@ -93,11 +92,12 @@ facs_boxplot <-
         name = "Genotype:",
         breaks = color_breaks,
         labels = color_labels
-      ) +
-      ggsave(
-        file = path_output,
-        width = w,
-        height = h,
-        bg = "transparent"
       )
+    plot(p)
+    ggsave(
+      file = path_output,
+      width = w,
+      height = h,
+      bg = "transparent"
+    )
   }
