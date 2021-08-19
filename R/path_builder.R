@@ -16,13 +16,15 @@
 #'
 #'
 path_builder <- function(experiment_name){
-  path_data <<- here::here("data", experiment_name)
+  experiment_path <- here::here(experiment_name)
+  dir.create(experiment_path, showWarnings = FALSE)
+  path_data <<- here::here(experiment_path, "data")
   dir.create(path_data, showWarnings = FALSE)
-  path_doc <<- here::here("doc")
-  path_raw <<- here::here("raw", experiment_name)
+  path_raw <<- here::here(experiment_path, "raw")
   dir.create(path_raw, showWarnings = FALSE)
-  path_output <<- here::here("output", experiment_name)
+  path_output <<- here::here(experiment_path, "output")
   dir.create(path_output, showWarnings = FALSE)
-  path_src <<- here::here("src")
+  path_src <<- here::here(experiment_path, "src")
+  dir.create(path_src, showWarnings = FALSE)
 }
 
