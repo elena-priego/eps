@@ -4,6 +4,7 @@
 #' animalario*.csv pattern as default download in english layout
 #' NOTE: take a look to determine if the first row is indicating sep=";"
 #' and remove in that case.
+#' NOTE: if an error ocurrs remove the accent mark.
 #' micecode as union from Nickname with Genotyping -> stored in data
 #'
 #' @param file_name Input file
@@ -38,7 +39,7 @@ get_genotype <-
       do.call("rbind", lapply(
         filenames,
         FUN = function(files) {
-          read.delim(files, sep = ";")
+          read.delim(files, sep = c(",", ";"))
         }
       ))
     dataset <-
