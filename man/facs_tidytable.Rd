@@ -6,10 +6,10 @@
 \usage{
 facs_tidytable(
   file,
-  path_data,
+  path_file,
   animalario_file,
   gate_pattern,
-  path_raw,
+  path_mice,
   micecode
 )
 }
@@ -17,7 +17,7 @@ facs_tidytable(
 \item{file}{.xls generated from Flowjo with cell percentages and fluorescent
 intensities}
 
-\item{path_data}{path where file is located. Usually path_data from
+\item{path_file}{path where file is located. Usually path_output from
 path_builder()}
 
 \item{animalario_file}{raw csv downloaded from animalario with mice used in
@@ -29,7 +29,7 @@ Common ones are: c("Freq. of Parent" = "Freq.",
 "Freq. of Grandparent" = "Freq.",
 "Geometric Mean" = "GMFI", "Median" = "MdFI", "\\)" = "")}
 
-\item{path_raw}{path where animalario file to obtain the genotypes is
+\item{path_mice}{path where animalario file to obtain the genotypes is
 located. usually path_raw from path_builder.}
 
 \item{micecode}{named list with the replacement for the genotypes.

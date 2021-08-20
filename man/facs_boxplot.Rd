@@ -17,7 +17,7 @@ facs_boxplot(
   color_breaks = waiver(),
   color_labels = waiver(),
   path_output = path_output,
-  w = 5,
+  w = 10,
   h = 5
 )
 }
