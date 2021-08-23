@@ -1,13 +1,7 @@
-#' Boxplot creation for cytometry data
-#'
-#' Boxplot generation for data created with facs_tidytable.
-#' Design to work inside an apply function with all the possible combinations of
-#' parameters in order to generate multiple plots (see examples).
+#' weight_mean_plot
+#' plot a weight-loss curve with the mean value of each genotype by day
 #'
 #' @param table tidy table coming form facs_tidytable
-#' @param organ.i organ selected to plot (specimen in .fcs file)
-#' @param stat.i statistic selected to plot
-#' @param marker.i marker selected to plot
 #' @param title.i title of the plot
 #' @param x_lab x-axis label
 #' @param y_lab y-axis label
@@ -29,24 +23,11 @@
 #' @export
 #'
 #' @examples
-#' comb <- as_tibble(unique(paste(table$organ, table$stat, table$marker,
-#'                                sep = "_-_"))) %>%
-#'         separate(value, into = c("organ", "stat", "marker"), sep = "_-_") %>%
-#'         mutate(output = here(path_output,
-#'                              paste0(organ, "_", stat, "_", marker, ".png")),
-#'                y_lab = paste0(marker, " (", stat, ")")) %>% as.data.frame()
+#' weight_mean_plot(table_raw, y_limit = 10,
+#' path_output = here(path_output, "mean_raw.png"))
 #'
-#' apply(comb, 1, function(x) facs_boxplot(table, organ.i = x[1], stat.i = x[2],
-#'   marker.i = x[3], path_output = x[4], y_lab = x[5],
-#'   title.i = x[1]))
-
-
-
-facs_boxplot <-
+weight_mean_plot <-
   function(table,
-           organ.i,
-           stat.i,
-           marker.i,
            title.i = "",
            x_lab = "",
            y_lab = "",
@@ -58,23 +39,28 @@ facs_boxplot <-
            w = 10,
            h = 5) {
     p <- table %>%
-      filter(organ == organ.i) %>%
-      filter(stat == stat.i) %>%
-      filter(marker == marker.i) %>%
-      ggplot(aes(cell, value, colour = genotype)) +
-      geom_boxplot(outlier.shape = NA,
-                   fill = "transparent",
-                   size = 0.5) +
+      mutate(day = lubridate::ymd(day)) %>%
+      group_by(genotype, day) %>%
+      summarise( N    = length(value),
+                 mean = mean(value),
+                 sd   = sd(value),
+                 se   = sd / sqrt(N),
+                 .groups = "drop") %>%
+      mutate(genotype = factor(genotype,
+                               levels = c("VHL-HIF2a-WT  ", "VHL-HIF2a-KO  "),
+                               ordered = TRUE)) %>%
+      ggplot(aes(y=mean, x=day, colour = genotype)) +
       geom_point(
-        position = position_jitterdodge(jitter.width = 0.3),
         alpha = 0.7,
         size = 3,
         stroke = 0
       ) +
+      geom_errorbar(aes(ymin=mean-se,ymax=mean+se),width=0.2)+
+      geom_line(size = 0.5)+
+      scale_x_date(date_labels = "%d-%b") +
       labs(x = x_lab, y = y_lab, title = title.i) +
       scale_y_continuous() +
       expand_limits(y = y_limit) +
-      scale_x_discrete(labels = waiver()) +
       theme_clean(base_family = "sans", base_size = 18) +
       theme(
         strip.text.x = element_blank(),
@@ -83,7 +69,6 @@ facs_boxplot <-
                                          fill = "transparent"),
         legend.title = element_text(face = "plain", size = 15),
         legend.text = element_text(size = 10),
-        axis.text.x = element_text(angle = 45, hjust = 1,),
         plot.background = element_rect(colour = NA,
                                        fill = "transparent")
       ) +
