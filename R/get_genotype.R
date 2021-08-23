@@ -32,6 +32,7 @@
 get_genotype <-
   function(file_name = c("^animalario", "$csv"),
            path_raw,
+           csv_sep = ",",
            micecode) {
     filenames <- list.files(pattern = c("^animalario", "$csv"), path = path_raw)
     filenames <- here::here(path_raw, filenames)
@@ -39,7 +40,7 @@ get_genotype <-
       do.call("rbind", lapply(
         filenames,
         FUN = function(files) {
-          read.delim(files, sep = c(",", ";"))
+          read.delim(files, sep = csv_sep)
         }
       ))
     dataset <-
