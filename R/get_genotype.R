@@ -13,6 +13,7 @@
 #' @param micecode Named chr list containing the replacement chr for the
 #' genotype. BBV, CCT, DCX and DCW strains can be loaded
 #' with \code{data(micecode)}
+#' @param csv_sep separator for the csv file. Default to ","
 #'
 #' @import here
 #'
@@ -32,9 +33,9 @@
 get_genotype <-
   function(file_name = c("^animalario", "$csv"),
            path_raw,
-           csv_sep = ",",
-           micecode) {
-    filenames <- list.files(pattern = c("^animalario", "$csv"), path = path_raw)
+           micecode,
+           csv_sep = ",") {
+    filenames <- list.files(file_name, path = path_raw)
     filenames <- here::here(path_raw, filenames)
     dataset <-
       do.call("rbind", lapply(

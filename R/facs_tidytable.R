@@ -46,7 +46,8 @@ facs_tidytable <-
            animalario_file,
            gate_pattern,
            path_mice,
-           micecode) {
+           micecode,
+           animalario_sep = ",") {
     file <- here::here(path_file, file)
     tidy <- readxl::read_excel(file)
     tidy <- sapply(tidy[], function(y)
@@ -71,7 +72,7 @@ facs_tidytable <-
       mutate(mice = str_replace_all(mice, ".fcs", "")) %>%
       mutate(cell = sub(".*/", "", cell)) %>%
       mutate_all(trimws)
-    genotype <- get_genotype(animalario_file, path_mice, micecode)
+    genotype <- get_genotype(animalario_file, path_mice, animalario_sep, micecode)
     tidy <- left_join(tidy, genotype, by = "mice")
     tidy <- tidy %>%
       mutate(

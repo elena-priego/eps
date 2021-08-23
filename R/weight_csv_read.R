@@ -29,7 +29,7 @@ weight_csv_read <-
            date_format = "%d.%b") {
     path_file <- here::here(path_csv, csv_file)
     table <- read.delim(file = path_file, sep = csv_sep) %>%
-      pivot_longer(cols = -"ID",
+      pivot_longer(cols = -"mice",
                    names_to = "day",
                    values_to = "value") %>%
       mutate(day = str_replace_all(day, "X", "")) %>%

@@ -27,18 +27,19 @@
 #' "Animalario-VHL2101.csv", micecode)
 #'
 weight_tidytable <- function(csv_file,
-                        path_csv,
-                        csv_sep = ",",
-                        date_format = "%d.%b",
-                        animalario_file,
-                        path_mice,
-                        micecode) {
+                             path_csv,
+                             animalario_file,
+                             path_mice,
+                             micecode,
+                             csv_sep = ",",
+                             date_format = "%d.%b") {
   tidy_table <-
     weight_csv_read(csv_file, path_csv, csv_sep, date_format)
   genotype_table <-
     get_genotype(animalario_file, path_mice, micecode)
-  table <- left_join(tidy_table, genotype_table, by = "mice") %>%
+  joined_table <- left_join(tidy_table, genotype_table, by = "mice") %>%
     mutate(mice = as.factor(mice),
            genotype = as.factor(genotype))
-  return(table)
+  return(joined_table)
 }
+
