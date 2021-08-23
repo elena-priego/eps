@@ -25,6 +25,7 @@ Extract mice number and genotype from multiple files
 animalario*.csv pattern as default download in english layout
 NOTE: take a look to determine if the first row is indicating sep=";"
 and remove in that case.
+NOTE: if an error ocurrs remove the accent mark.
 micecode as union from Nickname with Genotyping -> stored in data
 }
 \examples{
