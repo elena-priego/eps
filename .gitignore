@@ -1,3 +1,6 @@
 .Rproj.user
 .Rhistory
-*.Rhistory
+.RData
+.Ruserdata
+.RDataTmp
+.DS_Store
