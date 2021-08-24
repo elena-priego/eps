@@ -19,7 +19,6 @@ cover_init <- function(experiment_name) {
     paste0("title: ", experiment_name),
     "author: Elena Priego Saiz",
     paste0("date: ", Sys.Date()),
-    "Short conclusion: ",
     "output:",
     "  prettydoc::html_pretty:",
     "  theme: cayman",
