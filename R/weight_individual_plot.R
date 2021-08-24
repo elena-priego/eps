@@ -15,6 +15,8 @@
 #' (recommended path_output from path_builder())
 #' @param w width of the output plot
 #' @param h high of the output plot
+#' @param save_plot boolean indicating if the plot is saved or not. Default to TRUE.
+#' @param print_plot boolean indicating if the plot is printed or not. Default to FALSE.
 #'
 #' @import tidyverse
 #' @import ggthemes
@@ -37,13 +39,10 @@ weight_individual_plot <-
            color_labels = waiver(),
            path_output,
            w = 10,
-           h = 5) {
+           h = 5,
+           save_plot = TRUE,
+           print_plot = FALSE) {
     p <- table %>%
-      mutate(genotype = factor(
-        genotype,
-        levels = c("VHL-HIF2a-WT  ", "VHL-HIF2a-KO  "),
-        ordered = TRUE
-      )) %>%
       mutate(day = lubridate::ymd(day)) %>%
       ggplot(aes(x = day, y = value, colour = genotype)) +
       geom_point(
@@ -63,7 +62,7 @@ weight_individual_plot <-
       labs(x = x_lab, y = y_lab, title = title.i) +
       scale_y_continuous() +
       expand_limits(y = y_limit) +
-      theme_clean(base_family = "sans", base_size = 18) +
+      theme_clean(base_family = "sans", base_size = 15) +
       theme(
         strip.text.x = element_blank(),
         legend.position = "right",
@@ -80,12 +79,14 @@ weight_individual_plot <-
         breaks = color_breaks,
         labels = color_labels
       )
-    plot(p)
-    ggsave(
-      file = path_output,
-      width = w,
-      height = h,
-      bg = "transparent"
-    )
+    if (save_plot == TRUE) {
+      ggsave(
+        file = path_output,
+        width = w,
+        height = h,
+        bg = "transparent"
+      )
+    }
+    if(print_plot == TRUE) plot(p)
     return(p)
   }
