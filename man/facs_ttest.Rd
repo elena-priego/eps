@@ -4,10 +4,18 @@
 \alias{facs_ttest}
 \title{t-test analysis for facs data}
 \usage{
-facs_ttest(table, file1 = "t-test.csv", file2 = "significant-t-test.csv")
+facs_ttest(
+  table,
+  path_output = path_output,
+  file1 = "t-test.csv",
+  file2 = "significant-t-test.csv"
+)
 }
 \arguments{
-\item{table}{name of the table to be analyzed}
+\item{table}{name of the table to be analyzed. Filter to make that genotype
+column contains only 2 factors}
+
+\item{path_output}{path were the output will be stored}
 
 \item{file1}{name of the file containing all the analysis}
 
@@ -19,15 +27,19 @@ print in the screen the significant values
 significant_values data table with the significant samples and their
 p-value
 
-t-test.csv file with the whole analysis in result folder
+t-test.csv file with the whole analysis in output folder
 
 significant-t-test.csv file with the samples that show a p-value
-lower than 0.05 in result folder
+lower than 0.05 in output folder
 }
 \description{
 t-test analysis for data coming in a tidy format from facs_tidytable
 function.
 }
 \examples{
-facs_ttest(table)
+table1 <- filter(genotype \%in\% c("VHL-HIF1a-KO  ", "VHL-HIF1a-WT  "))
+facs_ttest(table1,
+           path_output = path_output,
+           file1 = "HIF1a-DKO-t.test.csv",
+           file2 = "HIF1a-DKO-significant-t-test.csv")
 }

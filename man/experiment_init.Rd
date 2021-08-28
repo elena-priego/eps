@@ -15,8 +15,8 @@ experiment title}
 
 }
 \description{
-Generate the folders associated to the experiment in data, raw and result.
-Creation of the cover page in an Rmd to write the protocol and the analysis.
+Generate the folders associated to the experiment in data, raw and output and
+creation of the cover page in an Rmd to write the protocol and the analysis.
 Should be used directly in the console within the project folder
 }
 \examples{

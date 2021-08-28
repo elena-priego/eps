@@ -10,7 +10,7 @@
 #'
 #' @param file .xls generated from Flowjo with cell percentages and fluorescent
 #'  intensities
-#' @param path_data path where file is located. Usually path_data from
+#' @param path_file path where file is located. Usually path_output from
 #' path_builder()
 #' @param animalario_file raw csv downloaded from animalario with mice used in
 #'  the experiment
@@ -19,7 +19,7 @@
 #' Common ones are: c("Freq. of Parent" = "Freq.",
 #' "Freq. of Grandparent" = "Freq.",
 #' "Geometric Mean" = "GMFI", "Median" = "MdFI", "\\)" = "")
-#' @param path_raw path where animalario file to obtain the genotypes is
+#' @param path_mice path where animalario file to obtain the genotypes is
 #' located. usually path_raw from path_builder.
 #' @param micecode named list with the replacement for the genotypes.
 #' Load from micecode data included in the package.
@@ -42,13 +42,13 @@
 #'
 facs_tidytable <-
   function(file,
-           path_data,
+           path_file,
            animalario_file,
            gate_pattern,
-           path_raw,
-           micecode) {
-    file <- "Table.xls"
-    file <- here::here(path_data, file)
+           path_mice,
+           micecode,
+           animalario_sep = ",") {
+    file <- here::here(path_file, file)
     tidy <- readxl::read_excel(file)
     tidy <- sapply(tidy[], function(y)
       as.character(y))
@@ -72,7 +72,7 @@ facs_tidytable <-
       mutate(mice = str_replace_all(mice, ".fcs", "")) %>%
       mutate(cell = sub(".*/", "", cell)) %>%
       mutate_all(trimws)
-    genotype <- get_genotype(animalario_file, path_raw, micecode)
+    genotype <- get_genotype(animalario_file, path_mice, animalario_sep, micecode)
     tidy <- left_join(tidy, genotype, by = "mice")
     tidy <- tidy %>%
       mutate(

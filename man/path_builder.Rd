@@ -14,7 +14,7 @@ path_builder(experiment_name)
 }
 \description{
 Generate the pathways to save the files of the projects and create specific
-folders in data, raw and result. The pathways are saved in R environment to
+folders in data, raw and output. The pathways are saved in R environment to
 be used along the analysis
 }
 \examples{
