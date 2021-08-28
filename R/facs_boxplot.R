@@ -93,7 +93,7 @@ facs_boxplot <-
         name = "Genotype:",
         breaks = color_breaks,
         labels = color_labels
-      ) +
+      )
       ggsave(
         file = path_output,
         width = w,
