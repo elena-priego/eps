@@ -12,17 +12,11 @@
 #'  intensities
 #' @param path_file path where file is located. Usually path_output from
 #' path_builder()
-#' @param animalario_file raw csv downloaded from animalario with mice used in
-#'  the experiment
 #' @param gate_pattern named list with the replacements desired for the gates.
 #' Load from gate_pattern data included in the package.
 #' Common ones are: c("Freq. of Parent" = "Freq.",
 #' "Freq. of Grandparent" = "Freq.",
 #' "Geometric Mean" = "GMFI", "Median" = "MdFI", "\\)" = "")
-#' @param path_mice path where animalario file to obtain the genotypes is
-#' located. usually path_raw from path_builder.
-#' @param micecode named list with the replacement for the genotypes.
-#' Load from micecode data included in the package.
 
 #'
 #' @import readxl
@@ -35,19 +29,14 @@
 #'
 #' @examples
 #' data(gate_pattern)
-#' data(micecode)
-#' facs_tidytable("table.xls", path_data, "animalario.csv",
-#'     gate_pattern = gate_pattern, micecode = micecode)
+#' facs_tidytable("table.xls", path_file = path_output,
+#'     gate_pattern = gate_pattern)
 #'
 #'
 facs_tidytable <-
   function(file,
            path_file,
-           animalario_file,
-           gate_pattern,
-           path_mice,
-           micecode,
-           animalario_sep = ",") {
+           gate_pattern) {
     file <- here::here(path_file, file)
     tidy <- readxl::read_excel(file)
     tidy <- sapply(tidy[], function(y)
@@ -72,18 +61,6 @@ facs_tidytable <-
       mutate(mice = str_replace_all(mice, ".fcs", "")) %>%
       mutate(cell = sub(".*/", "", cell)) %>%
       mutate_all(trimws)
-    genotype <- get_genotype(animalario_file, path_mice, animalario_sep, micecode)
-    tidy <- left_join(tidy, genotype, by = "mice")
-    tidy <- tidy %>%
-      mutate(
-        value = as.numeric(value),
-        organ = as.factor(organ),
-        mice = as.factor(mice),
-        cell = as.factor(cell),
-        stat = as.factor(stat),
-        marker = as.factor(marker),
-        genotype = as.factor(genotype)
-      )
     return(tidy)
   }
 

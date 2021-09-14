@@ -93,10 +93,10 @@ facs_boxplot <-
         breaks = color_breaks,
         labels = color_labels
       )
-      ggsave(
+     ggsave(
         file = path_output,
         width = w,
         height = h,
-        bg = "transparent"
+        bg = "transparent")
     return(p)
   }
