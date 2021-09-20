@@ -36,7 +36,7 @@
 #' @examples
 #' data(gate_pattern)
 #' data(micecode)
-#' facs_tidytable("table.xls", path_data, "animalario.csv",
+#' facs_tidytable_genotype("table.xls", path_data, "animalario.csv",
 #'     gate_pattern = gate_pattern, micecode = micecode)
 #'
 #'

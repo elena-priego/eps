@@ -16,7 +16,7 @@ facs_boxplot(
   color_values = RColorBrewer::brewer.pal(8, "Paired")[7:8],
   color_breaks = waiver(),
   color_labels = waiver(),
-  path_output = path_output,
+  path_output,
   w = 10,
   h = 5
 )

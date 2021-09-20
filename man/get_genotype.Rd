@@ -4,7 +4,12 @@
 \alias{get_genotype}
 \title{Generate an object matching miceID with their genotype}
 \usage{
-get_genotype(file_name = c("^animalario", "$csv"), path_raw, micecode)
+get_genotype(
+  file_name = c("^animalario", "$csv"),
+  path_raw,
+  micecode,
+  csv_sep = ","
+)
 }
 \arguments{
 \item{file_name}{Input file}
@@ -15,6 +20,8 @@ subfolder inside raw}
 \item{micecode}{Named chr list containing the replacement chr for the
 genotype. BBV, CCT, DCX and DCW strains can be loaded
 with \code{data(micecode)}}
+
+\item{csv_sep}{separator for the csv file. Default to ","}
 }
 \value{
 data.table with two column: one for the miceID and the other with
