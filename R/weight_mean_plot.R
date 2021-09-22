@@ -43,6 +43,7 @@ weight_mean_plot <-
            save_plot = TRUE,
            print_plot = FALSE) {
     p <- table %>%
+      drop_na() %>%
       mutate(day = lubridate::ymd(day)) %>%
       group_by(genotype, day) %>%
       summarise( N    = length(value),
