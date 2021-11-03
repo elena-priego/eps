@@ -34,33 +34,39 @@
 #'
 #'
 facs_tidytable <-
-  function(file,
-           path_file,
+  function(file = c("^Table", "$csv"),
+           path_file = path_output,
            gate_pattern) {
+    file <- list.files(file, path = path_file)
     file <- here::here(path_file, file)
-    tidy <- readxl::read_excel(file)
-    tidy <- sapply(tidy[], function(y)
-      as.character(y))
-    tidy <- as_tibble(tidy)
-    tidy <- tidy[!(tidy[, 1] == "Mean" | tidy[, 1] == "SD"), ]
-    freq <- grep("(.*) Freq. (.*)", names(tidy))
-    tidy[freq] <- lapply(tidy[freq], function(y)
-      sub("%", "", y))
-    names(tidy) <- str_replace_all(names(tidy), gate_pattern)
-    tidy <- tidy %>%  pivot_longer(cols = -"...1",
-                                   names_to = "statistic",
-                                   values_to = "value") %>%
-      separate("...1",
-               into = c("organ", "mice"),
-               sep = "_") %>%
-      separate("statistic",
-               into = c("cell", "stat2"),
-               sep = "\\|") %>%
-      separate("stat2", into = c("stat", "marker"), sep = "\\(") %>%
-      mutate(marker = replace_na(marker, "freq")) %>%
-      mutate(mice = str_replace_all(mice, ".fcs", "")) %>%
-      mutate(cell = sub(".*/", "", cell)) %>%
-      mutate_all(trimws)
-    return(tidy)
+    table <-
+      do.call("rbind", lapply(
+        file,
+        FUN = function(files) {
+          tidy <- readxl::read_excel(files)
+          tidy <- sapply(tidy[], function(y)
+            as.character(y))
+          tidy <- as_tibble(tidy)
+          tidy <- tidy[!(tidy[, 1] == "Mean" | tidy[, 1] == "SD"), ]
+          freq <- grep("(.*) Freq. (.*)", names(tidy))
+          tidy[freq] <- lapply(tidy[freq], function(y)
+            sub("%", "", y))
+          names(tidy) <- str_replace_all(names(tidy), gate_pattern)
+          tidy <- tidy %>%  pivot_longer(cols = -"...1",
+                                         names_to = "statistic",
+                                         values_to = "value") %>%
+            separate("...1",
+                     into = c("organ", "mice"),
+                     sep = "_") %>%
+            separate("statistic",
+                     into = c("cell", "stat2"),
+                     sep = "\\|") %>%
+            separate("stat2", into = c("stat", "marker"), sep = "\\(") %>%
+            mutate(marker = replace_na(marker, "freq")) %>%
+            mutate(mice = str_replace_all(mice, ".fcs", "")) %>%
+            mutate(cell = sub(".*/", "", cell)) %>%
+            mutate_all(trimws)
+        }))
+    return(table)
   }
 

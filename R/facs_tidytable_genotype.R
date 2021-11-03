@@ -41,14 +41,14 @@
 #'
 #'
 facs_tidytable_genotype <-
-  function(file,
-           path_file,
-           animalario_file,
+  function(file = c("^Table", "$csv"),
+           path_file = path_output,
+           animalario_file = c("^animalario", "$csv"),
            gate_pattern,
-           path_mice,
+           path_mice = path_raw,
            micecode,
            animalario_sep = ",") {
-    tidy <- facs_tidytable("table.xls", path_file = path_file,
+    tidy <- facs_tidytable(file, path_file = path_file,
          gate_pattern = gate_pattern)
     genotype <- get_genotype(file_name = animalario_file,
                              path_raw = path_mice,
