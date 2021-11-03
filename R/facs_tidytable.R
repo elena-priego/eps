@@ -21,7 +21,6 @@
 #'
 #' @import readxl
 #' @import tidyverse
-#' @import usethis
 #' @import here
 #'
 #' @return a tibble with the tidy format

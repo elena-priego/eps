@@ -35,6 +35,8 @@ located. usually path_raw from path_builder.}
 
 \item{micecode}{named list with the replacement for the genotypes.
 Load from micecode data included in the package.}
+
+\item{animalario_sep}{separator for the animalario csv file. Default to ","}
 }
 \value{
 a tibble with the tidy format

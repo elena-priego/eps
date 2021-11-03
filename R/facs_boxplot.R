@@ -12,6 +12,9 @@
 #' @param x_lab x-axis label
 #' @param y_lab y-axis label
 #' @param y_limit inferior limit for y-axis
+#' @param x_angle angle of the labels of the x-axis. NULL for horizontal,
+#' 45 for inclination
+#' @param x_hjust horizontal justification of the labels of the x-axis
 #' @param color_values 	a set of aesthetic values to map data values to.
 #' The values will be matched in order (usually alphabetical).
 #' @param color_breaks takes the limits as input and returns breaks as output
@@ -107,7 +110,6 @@ facs_boxplot <-
         bg = "transparent"
       )
     }
-    if (print_plot == TRUE)
-      plot(p)
+    if (print_plot == TRUE) plot(p)
     return(p)
   }

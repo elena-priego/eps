@@ -23,11 +23,10 @@
 #' located. usually path_raw from path_builder.
 #' @param micecode named list with the replacement for the genotypes.
 #' Load from micecode data included in the package.
-
+#' @param animalario_sep separator for the animalario csv file. Default to ","
 #'
 #' @import readxl
 #' @import tidyverse
-#' @import usethis
 #' @import here
 #'
 #' @return a tibble with the tidy format
@@ -65,6 +64,6 @@ facs_tidytable_genotype <-
         marker = as.factor(marker),
         genotype = as.factor(genotype)
       )
-    return(tidy)
+   return(tidy)
   }
 
