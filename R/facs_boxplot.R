@@ -51,7 +51,9 @@ facs_boxplot <-
            x_lab = "",
            y_lab = "",
            y_limit = 0,
-           color_values = RColorBrewer::brewer.pal(8, "Paired")[7:8],
+           y_angle = 45,
+           y_hjust = 1,
+           color_values = ggthemes::tableau_color_pal("Classic Green-Orange 12")[1:12],
            color_breaks = waiver(),
            color_labels = waiver(),
            path_output,
@@ -75,15 +77,15 @@ facs_boxplot <-
       scale_y_continuous() +
       expand_limits(y = y_limit) +
       scale_x_discrete(labels = waiver()) +
-      theme_clean(base_family = "sans", base_size = 18) +
+      theme_clean(base_family = "sans", base_size = 11) +
       theme(
         strip.text.x = element_blank(),
         legend.position = "right",
         legend.background = element_rect(colour = "transparent",
                                          fill = "transparent"),
-        legend.title = element_text(face = "plain", size = 15),
+        legend.title = element_text(face = "plain", size = 10),
         legend.text = element_text(size = 10),
-        axis.text.x = element_text(angle = 45, hjust = 1,),
+        axis.text.x = element_text(angle = y_angle, hjust = y_hjust),
         plot.background = element_rect(colour = NA,
                                        fill = "transparent")
       ) +

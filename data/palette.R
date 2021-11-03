@@ -13,11 +13,11 @@ shape_eps <- c(shape1, shape2, shape3)
 # save(color_eps, file = "data/colore_eps.rda")
 # save(shape_eps, file = "data/shape_eps.rda")
 
-library(ggplot2)
-ggplot(data.frame(x_axis=1:24, y_axis=rep(1:6, each=4)), aes(x=x_axis, y=y_axis))+
-  geom_point(aes(color= as.factor(1:24), size=20, shape=as.factor(rep(1:6, each=4))))+
-  scale_color_manual(values = color_eps) +
-  scale_shape_manual(values=shape_eps)+
-  theme_minimal()
+# library(ggplot2)
+# ggplot(data.frame(x_axis=1:24, y_axis=rep(1:6, each=4)), aes(x=x_axis, y=y_axis))+
+#   geom_point(aes(color= as.factor(1:24), size=20, shape=as.factor(rep(1:6, each=4))))+
+#   scale_color_manual(values = color_eps) +
+#   scale_shape_manual(values=shape_eps)+
+#   theme_minimal()
 
 #cambian los colores entre ggplot y plot de base
