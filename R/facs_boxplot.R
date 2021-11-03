@@ -20,6 +20,8 @@
 #' (recommended path_output from path_builder())
 #' @param w width of the output plot
 #' @param h high of the output plot
+#' @param save_plot boolean indicating if the plot is saved or not. Default to TRUE.
+#' @param print_plot boolean indicating if the plot is printed or not. Default to FALSE.
 #'
 #' @import here
 #' @import tidyverse
@@ -51,14 +53,16 @@ facs_boxplot <-
            x_lab = "",
            y_lab = "",
            y_limit = 0,
-           y_angle = 45,
-           y_hjust = 1,
+           x_angle = 45,
+           x_hjust = 1,
            color_values = ggthemes::tableau_color_pal("Classic Green-Orange 12")[1:12],
            color_breaks = waiver(),
            color_labels = waiver(),
            path_output,
            w = 10,
-           h = 5) {
+           h = 5,
+           save_plot = FALSE,
+           print_plot = FALSE) {
     p <- table %>%
       filter(organ == organ.i) %>%
       filter(stat == stat.i) %>%
@@ -85,7 +89,7 @@ facs_boxplot <-
                                          fill = "transparent"),
         legend.title = element_text(face = "plain", size = 10),
         legend.text = element_text(size = 10),
-        axis.text.x = element_text(angle = y_angle, hjust = y_hjust),
+        axis.text.x = element_text(angle = x_angle, hjust = x_hjust),
         plot.background = element_rect(colour = NA,
                                        fill = "transparent")
       ) +
@@ -95,12 +99,15 @@ facs_boxplot <-
         breaks = color_breaks,
         labels = color_labels
       )
-    plot(p)
-    ggsave(
-      file = path_output,
-      width = w,
-      height = h,
-      bg = "transparent"
-    )
+    if (save_plot == TRUE) {
+      ggsave(
+        file = path_output,
+        width = w,
+        height = h,
+        bg = "transparent"
+      )
+    }
+    if (print_plot == TRUE)
+      plot(p)
     return(p)
   }
