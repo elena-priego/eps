@@ -4,6 +4,10 @@
 #' @param x_lab x-axis label
 #' @param y_lab y-axis label
 #' @param title_lab title label
+#' @param y_trans transformation for the y axis ("asn", "atanh", "boxcox",
+#' "date", "exp", "hms", "identity", "log", "log10", "log1p", "log2", "logit",
+#' "modulus", "probability", "probit", "pseudo_log", "reciprocal", "reverse",
+#' "sqrt" and "time")
 #' @param x_angle angle of the labels of the x-axis. NULL for horizontal,
 #' 45 for inclination
 #' @param x_hjust horizontal justification of the labels of the x-axis
@@ -21,6 +25,7 @@
 #' @import here
 #' @import tidyverse
 #' @import ggthemes
+#' @import scales
 #'
 #' @return plot file in data folder
 #' @export
@@ -32,11 +37,12 @@
 CFU_boxplot <-
   function(table,
            x_lab = "genotype",
-           y_lab = "L.pneumophila CFU at day 1 (log2 scale)",
+           y_lab = "L.pneumophila CFU",
            title_lab = "",
-           x_angle = 45,
-           x_hjust = 1,
-           color_values = ggthemes::tableau_color_pal("Classic Green-Orange 12")[1:12],
+           y_trans = "identity",
+           x_angle = NULL,
+           x_hjust = NULL,
+           color_values = ggthemes::tableau_color_pal("Classic Green-Orange 12")(12)[1:12],
            color_breaks = waiver(),
            color_labels = waiver(),
            path_output,
@@ -50,9 +56,8 @@ CFU_boxplot <-
                    fill = "transparent",
                    size = 0.5) +
       geom_dotplot(binaxis = "y", stackdir = "center") +
-      scale_y_continuous(trans = "log2") +
+      scale_y_continuous(trans = y_trans, labels = scientific_format()) +
       labs(x = x_lab,
-
            y = y_lab,
            title = title_lab) +
       theme_clean(base_family = "sans", base_size = 11) +
