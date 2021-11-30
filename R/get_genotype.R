@@ -37,11 +37,7 @@ get_genotype <-
            csv_sep = ",") {
     filenames <- list.files(file_name, path = path_raw)
     filenames <- here::here(path_raw, filenames)
-
-    animalario_check <-
-      function (file = c("^animalario", "$csv"),
-                path_file = path_raw)
-        dataset <-
+    dataset <-
       do.call("rbind", lapply(
         filenames,
         FUN = function(files) {
