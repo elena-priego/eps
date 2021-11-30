@@ -37,6 +37,29 @@ get_genotype <-
            csv_sep = ",") {
     filenames <- list.files(file_name, path = path_raw)
     filenames <- here::here(path_raw, filenames)
+
+    animalario_check <-
+      function (file = c("^animalario", "$csv"),
+                path_file = path_raw)
+        dataset <-
+      do.call("rbind", lapply(
+        filenames,
+        FUN = function(files) {
+          read.delim(files, sep = csv_sep)
+        }
+      ))
+    if (ncol(dataset) == 1)
+      table <- lapply(
+        filenames,
+        FUN = function(file) {
+          tidy <- read_lines(file) %>%
+            str_replace_all('"', '') %>%
+            str_replace("sep=;", "") %>%
+            str_replace_all(";", ",")
+          tidy <- tidy[tidy != ""]
+          write_lines(tidy, file)
+        }
+      )
     dataset <-
       do.call("rbind", lapply(
         filenames,
@@ -45,12 +68,13 @@ get_genotype <-
         }
       ))
     dataset <-
-      dataset[!apply(is.na(dataset) | dataset == "", 1, all), ]
+      dataset[!apply(is.na(dataset) | dataset == "", 1, all),]
     filtered_dataset <- dataset  %>%
       mutate(
         mice = Code,
         full_genotype = paste(Nickname, Genotyping),
-        genotype = str_replace_all(full_genotype, micecode)) %>%
+        genotype = str_replace_all(full_genotype, micecode)
+      ) %>%
       select(mice, genotype)
     return(filtered_dataset)
   }
