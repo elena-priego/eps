@@ -7,11 +7,12 @@
 CFU_boxplot(
   table,
   x_lab = "genotype",
-  y_lab = "L.pneumophila CFU at day 1 (log2 scale)",
+  y_lab = "L.pneumophila CFU",
   title_lab = "",
-  x_angle = 45,
-  x_hjust = 1,
-  color_values = ggthemes::tableau_color_pal("Classic Green-Orange 12")[1:12],
+  y_trans = "identity",
+  x_angle = NULL,
+  x_hjust = NULL,
+  color_values = (ggthemes::tableau_color_pal("Classic Green-Orange 12"))(12)[1:12],
   color_breaks = waiver(),
   color_labels = waiver(),
   path_output,
@@ -29,6 +30,11 @@ CFU_boxplot(
 \item{y_lab}{y-axis label}
 
 \item{title_lab}{title label}
+
+\item{y_trans}{transformation for the y axis ("asn", "atanh", "boxcox",
+"date", "exp", "hms", "identity", "log", "log10", "log1p", "log2", "logit",
+"modulus", "probability", "probit", "pseudo_log", "reciprocal", "reverse",
+"sqrt" and "time")}
 
 \item{x_angle}{angle of the labels of the x-axis. NULL for horizontal,
 45 for inclination}

@@ -2,7 +2,7 @@
 #'
 #' @param file .csv with CFU counts. Header should be label with Code for mice
 #' column followed by the different dilutions included in the experiment written
-#' written in the format "Dil-1/[dilution]"
+#' written in the format "Dil-1/dilution"
 #' @param path_file path where file is located. Usually path_output from
 #' path_builder()
 #' @param animalario_file raw csv downloaded from animalario with mice used in

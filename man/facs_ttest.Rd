@@ -33,6 +33,9 @@ significant-t-test.csv file with the samples that show a p-value
 lower than 0.05 in output folder
 }
 \description{
+DEPRECATED- use ggpubr::compare_means() instead. Later ggplot+stat_compare_means(label =  "p.signif", label.x = 1.5))
+}
+\details{
 t-test analysis for data coming in a tidy format from facs_tidytable
 function.
 }
