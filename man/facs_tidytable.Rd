@@ -4,7 +4,11 @@
 \alias{facs_tidytable}
 \title{Prepare the data in a tidy format from the data obtained in Flowjo}
 \usage{
-facs_tidytable(file, path_file, gate_pattern)
+facs_tidytable(
+  file = c("^Table", "$csv"),
+  path_file = path_output,
+  gate_pattern
+)
 }
 \arguments{
 \item{file}{.xls generated from Flowjo with cell percentages and fluorescent

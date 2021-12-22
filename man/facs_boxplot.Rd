@@ -13,12 +13,16 @@ facs_boxplot(
   x_lab = "",
   y_lab = "",
   y_limit = 0,
-  color_values = RColorBrewer::brewer.pal(8, "Paired")[7:8],
+  x_angle = 45,
+  x_hjust = 1,
+  color_values = ggthemes::tableau_color_pal("Classic Green-Orange 12")[1:12],
   color_breaks = waiver(),
   color_labels = waiver(),
   path_output,
   w = 10,
-  h = 5
+  h = 5,
+  save_plot = FALSE,
+  print_plot = FALSE
 )
 }
 \arguments{
@@ -38,6 +42,11 @@ facs_boxplot(
 
 \item{y_limit}{inferior limit for y-axis}
 
+\item{x_angle}{angle of the labels of the x-axis. NULL for horizontal,
+45 for inclination}
+
+\item{x_hjust}{horizontal justification of the labels of the x-axis}
+
 \item{color_values}{a set of aesthetic values to map data values to.
 The values will be matched in order (usually alphabetical).}
 
@@ -51,6 +60,10 @@ The values will be matched in order (usually alphabetical).}
 \item{w}{width of the output plot}
 
 \item{h}{high of the output plot}
+
+\item{save_plot}{boolean indicating if the plot is saved or not. Default to TRUE.}
+
+\item{print_plot}{boolean indicating if the plot is printed or not. Default to FALSE.}
 }
 \value{
 plot file in data folder

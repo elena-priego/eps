@@ -12,6 +12,9 @@
 #' @param x_lab x-axis label
 #' @param y_lab y-axis label
 #' @param y_limit inferior limit for y-axis
+#' @param x_angle angle of the labels of the x-axis. NULL for horizontal,
+#' 45 for inclination
+#' @param x_hjust horizontal justification of the labels of the x-axis
 #' @param color_values 	a set of aesthetic values to map data values to.
 #' The values will be matched in order (usually alphabetical).
 #' @param color_breaks takes the limits as input and returns breaks as output
@@ -20,6 +23,8 @@
 #' (recommended path_output from path_builder())
 #' @param w width of the output plot
 #' @param h high of the output plot
+#' @param save_plot boolean indicating if the plot is saved or not. Default to TRUE.
+#' @param print_plot boolean indicating if the plot is printed or not. Default to FALSE.
 #'
 #' @import here
 #' @import tidyverse
@@ -51,12 +56,16 @@ facs_boxplot <-
            x_lab = "",
            y_lab = "",
            y_limit = 0,
-           color_values = RColorBrewer::brewer.pal(8, "Paired")[7:8],
+           x_angle = 45,
+           x_hjust = 1,
+           color_values = ggthemes::tableau_color_pal("Classic Green-Orange 12")[1:12],
            color_breaks = waiver(),
            color_labels = waiver(),
            path_output,
            w = 10,
-           h = 5) {
+           h = 5,
+           save_plot = FALSE,
+           print_plot = FALSE) {
     p <- table %>%
       filter(organ == organ.i) %>%
       filter(stat == stat.i) %>%
@@ -75,15 +84,15 @@ facs_boxplot <-
       scale_y_continuous() +
       expand_limits(y = y_limit) +
       scale_x_discrete(labels = waiver()) +
-      theme_clean(base_family = "sans", base_size = 18) +
+      theme_clean(base_family = "sans", base_size = 11) +
       theme(
         strip.text.x = element_blank(),
         legend.position = "right",
         legend.background = element_rect(colour = "transparent",
                                          fill = "transparent"),
-        legend.title = element_text(face = "plain", size = 15),
+        legend.title = element_text(face = "plain", size = 10),
         legend.text = element_text(size = 10),
-        axis.text.x = element_text(angle = 45, hjust = 1,),
+        axis.text.x = element_text(angle = x_angle, hjust = x_hjust),
         plot.background = element_rect(colour = NA,
                                        fill = "transparent")
       ) +
@@ -93,12 +102,14 @@ facs_boxplot <-
         breaks = color_breaks,
         labels = color_labels
       )
-    plot(p)
-    ggsave(
-      file = path_output,
-      width = w,
-      height = h,
-      bg = "transparent"
-    )
+    if (save_plot == TRUE) {
+      ggsave(
+        file = path_output,
+        width = w,
+        height = h,
+        bg = "transparent"
+      )
+    }
+    if (print_plot == TRUE) plot(p)
     return(p)
   }

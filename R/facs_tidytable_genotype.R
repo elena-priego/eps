@@ -23,11 +23,10 @@
 #' located. usually path_raw from path_builder.
 #' @param micecode named list with the replacement for the genotypes.
 #' Load from micecode data included in the package.
-
+#' @param animalario_sep separator for the animalario csv file. Default to ","
 #'
 #' @import readxl
 #' @import tidyverse
-#' @import usethis
 #' @import here
 #'
 #' @return a tibble with the tidy format
@@ -41,14 +40,14 @@
 #'
 #'
 facs_tidytable_genotype <-
-  function(file,
-           path_file,
-           animalario_file,
+  function(file = c("^Table", "$csv"),
+           path_file = path_output,
+           animalario_file = c("^animalario", "$csv"),
            gate_pattern,
-           path_mice,
+           path_mice = path_raw,
            micecode,
            animalario_sep = ",") {
-    tidy <- facs_tidytable("table.xls", path_file = path_file,
+    tidy <- facs_tidytable(file, path_file = path_file,
          gate_pattern = gate_pattern)
     genotype <- get_genotype(file_name = animalario_file,
                              path_raw = path_mice,
@@ -65,6 +64,6 @@ facs_tidytable_genotype <-
         marker = as.factor(marker),
         genotype = as.factor(genotype)
       )
-    return(tidy)
+   return(tidy)
   }
 

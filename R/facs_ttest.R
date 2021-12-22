@@ -1,5 +1,7 @@
 #' t-test analysis for facs data
 #'
+#' DEPRECATED- use ggpubr::compare_means() instead. Later ggplot+stat_compare_means(label =  "p.signif", label.x = 1.5))
+#'
 #' t-test analysis for data coming in a tidy format from facs_tidytable
 #' function.
 #'

@@ -5,11 +5,11 @@
 \title{Prepare the data in a tidy format from the data obtained in Flowjo}
 \usage{
 facs_tidytable_genotype(
-  file,
-  path_file,
-  animalario_file,
+  file = c("^Table", "$csv"),
+  path_file = path_output,
+  animalario_file = c("^animalario", "$csv"),
   gate_pattern,
-  path_mice,
+  path_mice = path_raw,
   micecode,
   animalario_sep = ","
 )
@@ -35,6 +35,8 @@ located. usually path_raw from path_builder.}
 
 \item{micecode}{named list with the replacement for the genotypes.
 Load from micecode data included in the package.}
+
+\item{animalario_sep}{separator for the animalario csv file. Default to ","}
 }
 \value{
 a tibble with the tidy format

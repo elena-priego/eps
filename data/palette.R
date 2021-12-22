@@ -15,7 +15,8 @@ shape_eps <- c(shape1, shape2, shape3)
 
 # library(ggplot2)
 # ggplot(data.frame(x_axis=1:24, y_axis=rep(1:6, each=4)), aes(x=x_axis, y=y_axis))+
-#   geom_point(aes(color=color_eps, size=20, shape=as.factor(rep(1:6, each=4))))+
+#   geom_point(aes(color= as.factor(1:24), size=20, shape=as.factor(rep(1:6, each=4))))+
+#   scale_color_manual(values = color_eps) +
 #   scale_shape_manual(values=shape_eps)+
 #   theme_minimal()
 
