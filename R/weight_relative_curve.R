@@ -1,10 +1,10 @@
-#' Plot OCR / ECAR profile from a Seahorse analysis
+#' Plot of relative weight by mice
 #'
-#' @param table tidy table with data comming from the analysis. Columns: time, genotype, mice, value
+#' @param table tidy table with data comming from the analysis. Columns: time, mice, genotype, value, experiment
 #' @param genotype_levels vector will all the genotypes all the analysis
 #' @param x_lab X-axis label
 #' @param y_lab y-axis label
-#' @param title.i title label
+#' @param title_lab title label
 #' @param x_angle Angle to display the x axis
 #' @param x_hjust Justificacion of the x axis
 #' @param color_values color to be ploted. Same number as levels have genotype . For VHL paper table$VHL_palette_color
@@ -26,7 +26,7 @@
 #' @return plot file in data folder
 #' @export
 #'
-#' @examples seahorse_curve(curve, title.i = "GGP Seahorse",
+#' @examples weight_relative_curve(table, title_lab = "GGP Seahorse",
 #' color_values = table$VHL_palette_color,
 #' shape_values = table$VHL_palette_shape,
 #' fill_values = table$VHL_palette_fill,
@@ -35,16 +35,16 @@
 #'
 #'
 #'
-seahorse_curve <-
+weight_relative_curve <-
   function(table,
            genotype_levels = c("WT", "KO"),
-           x_lab = "Time (minutes)",
-           y_lab = "Oxygen Consumption Rate (OCR) \n (pmol/min)",
+           x_lab = "Time (days)",
+           y_lab = "Relative weight",
            title_lab = "",
            x_angle = 0,
            x_hjust = 0.5,
            color_values = hue_pal()(200),
-           shape_values = rep(21, 200),
+           shape_values = rep(21,200),
            fill_values = hue_pal()(200),
            lty_values = rep("solid", 200),
            path_output = "plot.png",
@@ -52,10 +52,13 @@ seahorse_curve <-
            h = 5,
            save_plot = FALSE,
            print_plot = FALSE) {
-    # used_genotypes <- c(unique(table$genotype))
     p <- table %>%
+      drop_na() %>%
       mutate(genotype = factor(genotype, levels = genotype_levels)) %>%
-      group_by(genotype, time, experiment) %>%
+      group_by(genotype, experiment, mice) %>%
+      mutate(value = value / first(value, order_by = time) * 100) %>%
+      ungroup() %>%
+      group_by(genotype, experiment, time) %>%
       dplyr::summarise(
         mean = mean(value),
         se   = sd(value) / sqrt(n()),
