@@ -18,6 +18,7 @@
 
 micecode <- c("Ndufs4 KO CD11c-CRE \\(wt/wt\\)  Ndufs4 \\(lx/lx\\)" = "Ndufs4-WT",
               "Ndufs4 KO CD11c-CRE \\(tg\\+/wt\\)  Ndufs4 \\(lx/lx\\)" = "Ndufs4-CD11c-KO",
+              "Ndufs4 KO Ndufs4 \\(D/D\\)" = "Ndufs4-KO",
               "Ndufs4 KO CD11c-CRE \\(wt/wt\\)  Ndufs4 \\(D/D\\)" = "Ndufs4-KO",
               "Ndufs4 KO CD11c-CRE \\(tg\\+/wt\\)  Ndufs4 \\(D/D\\)" = "Ndufs4-KO",
               "Ndufs4 KO CD11c-CRE \\(wt/wt\\)  Ndufs4 \\(D/lx\\)" = "Ndufs4-het-WT",
