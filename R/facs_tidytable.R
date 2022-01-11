@@ -33,7 +33,7 @@
 #'
 #'
 facs_tidytable <-
-  function(file = c("^Table", "$csv"),
+  function(file = c("^Table"),
            path_file = path_output,
            gate_pattern) {
     file <- list.files(file, path = path_file)
