@@ -27,7 +27,8 @@ graphpad_column(
 tidy table
 }
 \description{
-read a pzfx file containing column displayed data and convert it into a tidy table for further representation
+read a pzfx file containing column displayed data and convert it into a tidy table for further representation.
+Generate a csv file into data folder
 }
 \examples{
 table <- graphpad_column(file)

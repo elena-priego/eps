@@ -16,7 +16,7 @@ CFU_tidytable_genotype(
 \arguments{
 \item{file}{.csv with CFU counts. Header should be label with Code for mice
 column followed by the different dilutions included in the experiment written
-written in the format "Dil-1/\link{dilution}"}
+written in the format "Dil-1/dilution"}
 
 \item{path_file}{path where file is located. Usually path_output from
 path_builder()}

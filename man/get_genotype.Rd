@@ -24,8 +24,7 @@ with \code{data(micecode)}}
 \item{csv_sep}{separator for the csv file. Default to ","}
 }
 \value{
-data.table with two column: one for the miceID and the other with
-their genotype
+
 }
 \description{
 Extract mice number and genotype from multiple files
@@ -34,6 +33,8 @@ NOTE: take a look to determine if the first row is indicating sep=";"
 and remove in that case.
 NOTE: if an error ocurrs remove the accent mark.
 micecode as union from Nickname with Genotyping -> stored in data
+Return a data.table with two column: one for the miceID and the other with
+their genotype
 }
 \examples{
 data(micecode)

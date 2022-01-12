@@ -6,6 +6,8 @@
 #' and remove in that case.
 #' NOTE: if an error ocurrs remove the accent mark.
 #' micecode as union from Nickname with Genotyping -> stored in data
+#' Return a data.table with two column: one for the miceID and the other with
+#' their genotype
 #'
 #' @param file_name Input file
 #' @param path_raw path were the file is located. Usually in the experiment
@@ -16,9 +18,7 @@
 #' @param csv_sep separator for the csv file. Default to ","
 #'
 #' @import here
-#'
-#' @return data.table with two column: one for the miceID and the other with
-#' their genotype
+#' @return
 #'
 #' @export
 #'

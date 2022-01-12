@@ -18,7 +18,7 @@ facs_boxplot(
   color_values = ggthemes::tableau_color_pal("Classic Green-Orange 12")[1:12],
   color_breaks = waiver(),
   color_labels = waiver(),
-  path_output,
+  path_output = "plot.png",
   w = 10,
   h = 5,
   save_plot = FALSE,
