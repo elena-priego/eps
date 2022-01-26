@@ -27,7 +27,7 @@ graphpad_grouped(
 tidy table
 }
 \description{
-graphpad_grouped
+Return a csv file into data folder
 }
 \examples{
 table <- graphpad_grouped(file)

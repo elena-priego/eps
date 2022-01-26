@@ -1,5 +1,7 @@
 #' graphpad_grouped
 #'
+#' Return a csv file into data folder
+#'
 #' @param name_graphpad name of the file to be open. By default select the files with pzfx extension
 #' @param sheet_n number of the sheet to be read
 #' @param folder folder to look in. Partial pathway from here()
@@ -11,7 +13,7 @@
 #' @import pzfx
 #'
 #' @return tidy table
-#' @export csv file into data folder
+#' @export
 #'
 #' @examples
 #' table <- graphpad_grouped(file)

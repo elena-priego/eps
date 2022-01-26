@@ -1,6 +1,7 @@
 #' graphpad_column
 #'
-#' read a pzfx file containing column displayed data and convert it into a tidy table for further representation
+#' read a pzfx file containing column displayed data and convert it into a tidy table for further representation.
+#' Generate a csv file into data folder
 #'
 #' @param name_graphpad name of the file to be open. By default select the files with pzfx extension
 #' @param sheet_n number of the sheet to be read
@@ -13,7 +14,7 @@
 #' @import pzfx
 #'
 #' @return tidy table
-#' @export csv file into data folder
+#' @export
 #'
 #' @examples
 #' table <- graphpad_column(file)
