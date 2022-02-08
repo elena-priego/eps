@@ -18,7 +18,7 @@
 path_builder <- function(experiment_name){
   experiment_path <- here::here(experiment_name)
   dir.create(experiment_path, showWarnings = FALSE)
-  path_data <<- here::here(experiment_path, "data")
+  path_data <<- here::here(experiment_path, "data", "")
   dir.create(path_data, showWarnings = FALSE)
   path_raw <<- here::here(experiment_path, "raw")
   dir.create(path_raw, showWarnings = FALSE)
