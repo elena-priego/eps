@@ -57,9 +57,9 @@ facs_tidytable <-
             separate("...1",
                      into = c("organ", "mice"),
                      sep = "_") %>%
-            separate("statistic",
-                     into = c("cell", "stat2"),
-                     sep = "\\|") %>%
+              separate("statistic",
+                       into = c("cell", "stat2"),
+                       sep = "\\|") %>%
             separate("stat2", into = c("stat", "marker"), sep = "\\(") %>%
             mutate(marker = replace_na(marker, "freq"),
                    mice = str_replace_all(mice, ".fcs", ""),
