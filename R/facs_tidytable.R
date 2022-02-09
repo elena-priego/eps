@@ -6,7 +6,8 @@
 #' Generation of a tidytable from the .xls generated from Flowjo.
 #' It's important to have the tubes correctly labelled: specimen should have a
 #' descriptive name without using "_" and each tube should be named using ONLY
-#' the full name of the mice.
+#' the full name of the mice. Generate standard columns: Time, mice, genotype,
+#' treatment, marker, stat, value, experiment, cell
 #'
 #' @param file .xls generated from Flowjo with cell percentages and fluorescent
 #'  intensities
@@ -35,6 +36,7 @@
 facs_tidytable <-
   function(file = c("^Table"),
            path_file = path_output,
+           time = "0h",
            gate_pattern) {
     file <- list.files(file, path = path_file)
     file <- here::here(path_file, file)
@@ -55,7 +57,7 @@ facs_tidytable <-
                                          names_to = "statistic",
                                          values_to = "value") %>%
             separate("...1",
-                     into = c("organ", "mice"),
+                     into = c("treatment", "mice"),
                      sep = "_") %>%
               separate("statistic",
                        into = c("cell", "stat2"),
@@ -63,7 +65,9 @@ facs_tidytable <-
             separate("stat2", into = c("stat", "marker"), sep = "\\(") %>%
             mutate(marker = replace_na(marker, "freq"),
                    mice = str_replace_all(mice, ".fcs", ""),
-                   cell = sub(".*/", "", cell)) %>%
+                   cell = sub(".*/", "", cell),
+                   time = time,
+                   experiment = str_extract(path_output, "\\d{2}.\\d{2}")) %>%
             mutate_all(trimws) %>%
             mutate(
               mice = factor(mice),
