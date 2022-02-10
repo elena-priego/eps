@@ -1,5 +1,7 @@
 #' CFU_tidytable_genotype
 #'
+#'DEPRECATED
+#'
 #' @param file .csv with CFU counts. Header should be label with Code for mice
 #' column followed by the different dilutions included in the experiment written
 #' written in the format "Dil-1/dilution"
