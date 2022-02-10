@@ -7,6 +7,7 @@
 facs_tidytable_genotype(
   file = c("^Table", "$csv"),
   path_file = path_output,
+  time = "0h",
   animalario_file = c("^animalario", "$csv"),
   gate_pattern,
   path_mice = path_raw,

@@ -58,13 +58,13 @@ facs_tidytable_genotype <-
     tidy <- tidy %>%
       mutate(
         value = as.numeric(value),
-        organ = as.factor(organ),
+        treatment = as.factor(treatment),
         mice = as.factor(mice),
         cell = as.factor(cell),
         stat = as.factor(stat),
         marker = as.factor(marker),
-        genotype = as.factor(genotype)
+        genotype = as.factor(genotype),
+        experiment = as.factor(experiment)
       )
    return(tidy)
   }
-

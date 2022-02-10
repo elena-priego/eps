@@ -4,7 +4,12 @@
 \alias{facs_tidytable}
 \title{Prepare the data in a tidy format from the data obtained in Flowjo}
 \usage{
-facs_tidytable(file = c("^Table"), path_file = path_output, gate_pattern)
+facs_tidytable(
+  file = c("^Table"),
+  path_file = path_output,
+  time = "0h",
+  gate_pattern
+)
 }
 \arguments{
 \item{file}{.xls generated from Flowjo with cell percentages and fluorescent
@@ -26,7 +31,8 @@ a tibble with the tidy format
 Generation of a tidytable from the .xls generated from Flowjo.
 It's important to have the tubes correctly labelled: specimen should have a
 descriptive name without using "_" and each tube should be named using ONLY
-the full name of the mice.
+the full name of the mice. Generate standard columns: Time, mice, genotype,
+treatment, marker, stat, value, experiment, cell
 }
 \examples{
 data(gate_pattern)

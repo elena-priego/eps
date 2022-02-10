@@ -72,12 +72,12 @@ facs_tidytable <-
             mutate(
               mice = factor(mice),
               cell = factor(cell),
-              organ = factor(organ),
+              treatment = factor(treatment),
               stat = factor(stat),
               marker = factor(marker),
-              value = as.numeric(value)
+              value = as.numeric(value),
+              experiment = factor(experiment)
             )
         }))
     return(table)
   }
-
