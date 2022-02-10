@@ -51,7 +51,7 @@ CFU_boxplot <-
            save_plot = FALSE,
            print_plot = FALSE) {
     p <- table %>%
-      ggplot(aes(genotype, mean_CFU, fill = genotype, colour = genotype)) +
+      ggplot(aes(genotype, value, fill = genotype, colour = genotype)) +
       geom_boxplot(outlier.shape = NA,
                    fill = "transparent",
                    size = 0.5) +
