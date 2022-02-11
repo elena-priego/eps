@@ -1,6 +1,6 @@
 #' CFU to tidy
 #'
-#' Function to use when the dilution is already calculated. Standard output. Can read multiple csv at the same time, but is better to do it separately inicating the different times.
+#' Function to use when the dilution is already calculated. Standard output. Can read multiple csv at the same time, but is better to do it separately inicating the different times. When multiple, write _M_. When no colonies, write 0.
 #'
 #' @param file .csv with CFU counts. Header should be label with Code for mice
 #' column followed by the different dilutions included in the experiment written
@@ -15,6 +15,7 @@
 #' @param micecode named list with the replacement for the genotypes.
 #' Load from micecode data included in the package.
 #' @param animalario_sep separator for the animalario csv file. Default to ","
+#' @param multiple Number to replace when the CFU where incontable. Represented by M in the original csv
 #' @param marker usually CFU (by deffault)
 #' @param cell Am. Indicate if they are from lung, BAL, ex vivo...
 #' @param time Time after infection. Default to 0h
@@ -39,6 +40,7 @@ CFU2tidy_genotype <-
            path_mice = path_raw,
            micecode = micecode,
            animalario_sep = ",",
+           multiple = "100",
            marker = "CFU",
            cell = "AM",
            time = "0h",
@@ -56,7 +58,7 @@ CFU2tidy_genotype <-
             pivot_longer(cols = -"Code",
                          names_to = "stat",
                          values_to = "raw_CFU") %>%
-            mutate(raw_CFU = str_replace_all(raw_CFU, "0", "")) %>%
+            mutate(raw_CFU = str_replace_all(raw_CFU, "M", multiple)) %>%
             mutate(dilution = lapply(stat, function(y)
               sub("Dil-", "", y)),
               raw_CFU = as.double(raw_CFU)) %>%
