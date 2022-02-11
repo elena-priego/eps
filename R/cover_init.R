@@ -45,7 +45,7 @@ cover_init <- function(experiment_name) {
     'options(encoding = "UTF-8")',
     "\n",
     "## packages that will be used",
-    'library(eps)',
+    "library(eps)",
     "library(here)",
     "library(broom)",
     "library(tidyverse)",
