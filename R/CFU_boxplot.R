@@ -56,7 +56,7 @@ CFU_boxplot <-
                    fill = "transparent",
                    size = 0.5) +
       geom_dotplot(binaxis = "y", stackdir = "center") +
-      scale_y_continuous(trans = y_trans, labels = scientific_format()) +
+      scale_y_continuous(trans = y_trans, labels = scales::scientific_format()) +
       labs(x = x_lab,
            y = y_lab,
            title = title_lab) +
