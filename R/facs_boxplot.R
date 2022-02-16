@@ -5,9 +5,11 @@
 #' parameters in order to generate multiple plots (see examples).
 #'
 #' @param table tidy table coming form facs_tidytable
-#' @param organ.i organ selected to plot (specimen in .fcs file)
-#' @param stat.i statistic selected to plot
-#' @param marker.i marker selected to plot
+#' @param organ.i optional organ selected to plot (specimen in .fcs file)
+#' @param stat.i optional statistic selected to plot
+#' @param marker.i optional marker selected to plot
+#' @param time.i optional time selected to plot
+#' @param treatment.i optional treatment selected to plot
 #' @param title.i title of the plot
 #' @param x_lab x-axis label
 #' @param y_lab y-axis label
@@ -19,12 +21,11 @@
 #' The values will be matched in order (usually alphabetical).
 #' @param color_breaks takes the limits as input and returns breaks as output
 #' @param color_labels takes the breaks as input and returns labels as output
-#' @param path_output ful name of the generated plot including the path
-#' (recommended path_output from path_builder())
+#' @param path_output Optional. Full file name desired (e.g. here(path_output, "plot.pdf"))
 #' @param w width of the output plot
 #' @param h high of the output plot
-#' @param save_plot boolean indicating if the plot is saved or not. Default to TRUE.
 #' @param print_plot boolean indicating if the plot is printed or not. Default to FALSE.
+
 #'
 #' @import here
 #' @import tidyverse
@@ -48,10 +49,12 @@
 
 
 facs_boxplot <-
-  function(table,
-           organ.i,
-           stat.i,
-           marker.i,
+  function(table ="",
+           organ.i = NULL,
+           stat.i = NULL,
+           time.i = NULL,
+           marker.i = NULL,
+           treatment.i = NULL,
            title.i = "",
            x_lab = "",
            y_lab = "",
@@ -61,15 +64,16 @@ facs_boxplot <-
            color_values = ggthemes::tableau_color_pal("Classic Green-Orange 12")(12)[1:12],
            color_breaks = waiver(),
            color_labels = waiver(),
-           path_output = "plot.png",
+           path_output = NULL,
            w = 10,
            h = 5,
-           save_plot = FALSE,
            print_plot = FALSE) {
     p <- table %>%
-      filter(organ == organ.i) %>%
-      filter(stat == stat.i) %>%
-      filter(marker == marker.i) %>%
+      {if (!is.null(organ.i)) filter(., organ == organ.i) else .} %>%
+      {if (!is.null(time.i)) filter(., time == time.i) else .} %>%
+      {if (!is.null(treatment.i)) filter(., treatment == treatment.i) else .} %>%
+      {if (!is.null(stat.i)) filter(., stat == stat.i) else .} %>%
+      {if (!is.null(marker.i)) filter(., marker == marker.i) else .} %>%
       ggplot(aes(cell, value, colour = genotype)) +
       geom_boxplot(outlier.shape = NA,
                    fill = "transparent",
@@ -102,7 +106,7 @@ facs_boxplot <-
         breaks = color_breaks,
         labels = color_labels
       )
-    if (save_plot == TRUE) {
+    if (!is.null(path_output)) {
       ggsave(
         file = path_output,
         width = w,

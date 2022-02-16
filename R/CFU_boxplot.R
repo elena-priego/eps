@@ -15,11 +15,9 @@
 #' The values will be matched in order (usually alphabetical).
 #' @param color_breaks takes the limits as input and returns breaks as output
 #' @param color_labels takes the breaks as input and returns labels as output
-#' @param path_output ful name of the generated plot including the path
-#' (recommended path_output from path_builder())
+#' @param path_output Optional. Full file name desired (e.g. here(path_output, "plot.pdf"))
 #' @param w width of the output plot
 #' @param h high of the output plot
-#' @param save_plot boolean indicating if the plot is saved or not. Default to TRUE.
 #' @param print_plot boolean indicating if the plot is printed or not. Default to FALSE.
 #'
 #' @import here
@@ -45,10 +43,9 @@ CFU_boxplot <-
            color_values = ggthemes::tableau_color_pal("Classic Green-Orange 12")(12)[1:12],
            color_breaks = waiver(),
            color_labels = waiver(),
-           path_output,
+           path_output = NULL,
            w = 10,
            h = 5,
-           save_plot = FALSE,
            print_plot = FALSE) {
     p <- table %>%
       ggplot(aes(genotype, value, fill = genotype, colour = genotype)) +
@@ -75,13 +72,13 @@ CFU_boxplot <-
                           breaks = color_breaks,
                           labels = color_labels)
 
-    if (save_plot == TRUE) {
+    if (!is.null(path_output)) {
       ggsave(
-      file = path_output,
-      width = w,
-      height = h,
-      bg = "transparent"
-    )
+        file = path_output,
+        width = w,
+        height = h,
+        bg = "transparent"
+      )
     }
     if (print_plot == TRUE) plot(p)
     return(p)
