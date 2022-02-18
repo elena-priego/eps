@@ -51,7 +51,7 @@ CFU2tidy_genotype <-
       do.call("rbind", lapply(
         file,
         FUN = function(files) {
-          table <- read_csv(file)
+          table <- read_csv(file, show_col_types = FALSE)
           table <- sapply(table[], function(y)
             as.character(y))
           table <- as_tibble(table) %>%
@@ -66,7 +66,7 @@ CFU2tidy_genotype <-
             select(-raw_CFU) %>%
             pivot_wider(id_cols = Code,
                         names_from = stat,
-                        values_from = value) %>%
+                        values_from = as.integer(value)) %>%
             mutate(mean_CFU = rowMeans(select(., -Code), na.rm = TRUE)) %>%
             pivot_longer(cols = -"Code",
                          names_to = "stat",
