@@ -63,10 +63,10 @@ CFU2tidy_genotype <-
               sub("Dil-", "", y)),
               raw_CFU = as.double(raw_CFU)) %>%
             mutate(value = as.double(dilution) * raw_CFU) %>%
-            select(-raw_CFU) %>%
+            select(-c(raw_CFU, dilution)) %>%
             pivot_wider(id_cols = Code,
                         names_from = stat,
-                        values_from = as.integer(value)) %>%
+                        values_from = value) %>%
             mutate(mean_CFU = rowMeans(select(., -Code), na.rm = TRUE)) %>%
             pivot_longer(cols = -"Code",
                          names_to = "stat",
