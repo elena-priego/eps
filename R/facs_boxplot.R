@@ -54,7 +54,9 @@ facs_boxplot <-
            stat.i = NULL,
            time.i = NULL,
            marker.i = NULL,
+           cell.i = NULL,
            treatment.i = NULL,
+           x_value = "cell",
            title.i = "",
            x_lab = "",
            y_lab = "",
@@ -74,7 +76,8 @@ facs_boxplot <-
       {if (!is.null(treatment.i)) filter(., treatment == treatment.i) else .} %>%
       {if (!is.null(stat.i)) filter(., stat == stat.i) else .} %>%
       {if (!is.null(marker.i)) filter(., marker == marker.i) else .} %>%
-      ggplot(aes(cell, value, colour = genotype)) +
+      {if (!is.null(cell.i)) filter(., cell == cell.i) else .} %>%
+      ggplot(aes(get(x_value), value, colour = genotype)) +
       geom_boxplot(outlier.shape = NA,
                    fill = "transparent",
                    size = 0.5) +
