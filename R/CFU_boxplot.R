@@ -45,7 +45,7 @@ CFU_boxplot <-
            color_values = ggthemes::tableau_color_pal("Classic Green-Orange 12")(12)[1:12],
            color_breaks = waiver(),
            color_labels = waiver(),
-           path_output,
+           path_output = NULL,
            w = 10,
            h = 5,
            save_plot = FALSE,
@@ -74,14 +74,13 @@ CFU_boxplot <-
       scale_colour_manual(values = color_values,
                           breaks = color_breaks,
                           labels = color_labels)
-
-    if (save_plot == TRUE) {
+    if (!is.null(path_output)) {
       ggsave(
-      file = path_output,
-      width = w,
-      height = h,
-      bg = "transparent"
-    )
+        file = path_output,
+        width = w,
+        height = h,
+        bg = "transparent"
+      )
     }
     if (print_plot == TRUE) plot(p)
     return(p)
