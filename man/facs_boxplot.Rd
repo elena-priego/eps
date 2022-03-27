@@ -5,10 +5,14 @@
 \title{Boxplot creation for cytometry data}
 \usage{
 facs_boxplot(
-  table,
-  organ.i,
-  stat.i,
-  marker.i,
+  table = "",
+  organ.i = NULL,
+  stat.i = NULL,
+  time.i = NULL,
+  marker.i = NULL,
+  cell.i = NULL,
+  treatment.i = NULL,
+  x_value = "cell",
   title.i = "",
   x_lab = "",
   y_lab = "",
@@ -18,21 +22,24 @@ facs_boxplot(
   color_values = (ggthemes::tableau_color_pal("Classic Green-Orange 12"))(12)[1:12],
   color_breaks = waiver(),
   color_labels = waiver(),
-  path_output = "plot.png",
+  path_output = NULL,
   w = 10,
   h = 5,
-  save_plot = FALSE,
   print_plot = FALSE
 )
 }
 \arguments{
 \item{table}{tidy table coming form facs_tidytable}
 
-\item{organ.i}{organ selected to plot (specimen in .fcs file)}
+\item{organ.i}{optional organ selected to plot (specimen in .fcs file)}
 
-\item{stat.i}{statistic selected to plot}
+\item{stat.i}{optional statistic selected to plot}
 
-\item{marker.i}{marker selected to plot}
+\item{time.i}{optional time selected to plot}
+
+\item{marker.i}{optional marker selected to plot}
+
+\item{treatment.i}{optional treatment selected to plot}
 
 \item{title.i}{title of the plot}
 
@@ -54,14 +61,11 @@ The values will be matched in order (usually alphabetical).}
 
 \item{color_labels}{takes the breaks as input and returns labels as output}
 
-\item{path_output}{ful name of the generated plot including the path
-(recommended path_output from path_builder())}
+\item{path_output}{Optional. Full file name desired (e.g. here(path_output, "plot.pdf"))}
 
 \item{w}{width of the output plot}
 
 \item{h}{high of the output plot}
-
-\item{save_plot}{boolean indicating if the plot is saved or not. Default to TRUE.}
 
 \item{print_plot}{boolean indicating if the plot is printed or not. Default to FALSE.}
 }

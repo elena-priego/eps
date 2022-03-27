@@ -36,7 +36,7 @@ Load from micecode data included in the package.}
 a tibble with the tidy format of the CFU
 }
 \description{
-CFU_tidytable_genotype
+DEPRECATED
 }
 \examples{
 data(micecode)
