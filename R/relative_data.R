@@ -10,9 +10,9 @@
 relative_data <- function(df) {
   
   table1 <- df %>%
-    group_by("marker", "experiment") %>%
+    group_by(marker, experiment) %>%
     filter(str_detect(genotype, "WT")) %>%
-    summarize(mean = sum(value) / n())
+    summarize(mean = sum(value) / n(), .groups = "keep")
   
   table2 <- df %>%
     pivot_wider(names_from = genotype,
@@ -24,7 +24,7 @@ relative_data <- function(df) {
   table3 <- full_table %>%
     pivot_longer(
       names_to = "genotype",
-      cols = -c("marker", "experiment", "mean"),
+      cols = -c(marker, experiment, mean),
       values_drop_na = TRUE
     ) %>%
     unnest(cols = everything()) %>%
@@ -33,4 +33,3 @@ relative_data <- function(df) {
   
   return(table3)
 }
-relative_data(my_data)
