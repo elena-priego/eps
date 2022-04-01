@@ -76,7 +76,8 @@ facs_tidytable <-
               stat = factor(stat),
               marker = factor(marker),
               value = as.numeric(value),
-              experiment = factor(experiment)
+              experiment = factor(experiment),
+              time = factor(time)
             )
         }))
     return(table)
