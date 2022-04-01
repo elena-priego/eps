@@ -23,6 +23,7 @@ micecode <- c("Ndufs4 KO CD11c-CRE \\(wt/wt\\)  Ndufs4 \\(lx/lx\\)" = "Ndufs4-WT
               "Ndufs4 KO CD11c-CRE \\(tg\\+/wt\\)  Ndufs4 \\(D/D\\)" = "Ndufs4-KO",
               "Ndufs4 KO CD11c-CRE \\(wt/wt\\)  Ndufs4 \\(D/lx\\)" = "Ndufs4-het-WT",
               "Ndufs4 KO CD11c-CRE \\(tg\\+/wt\\)  Ndufs4 \\(D/lx\\)" = "Ndufs4-het-KO",
+              "C57BL/6 (CRL)" = "Ndufs4-WT",
               "CD11cCre VHLflox limpio CD11c-CRE \\(-/-\\)" = "VHL-WT",
               "CD11cCre VHLflox limpio CD11c-CRE \\(\\+/\\+\\)" = "VHL-KO",
               "CD11cCre x VHL\\&HIF1-fl/fl Cre \\(wt/wt\\)" = "VHL-HIF1a-WT",
