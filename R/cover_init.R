@@ -69,6 +69,13 @@ cover_init <- function(experiment_name) {
     "\n",
     "\n",
     "## Conclusions",
+    "\n",
+    "\n",
+    "<details><summary>Session Info</summary>",
+    "```{r}",
+    "pander::pander(sessionInfo())",
+    "```",
+    "</details>",
     sep = "\n"
   )
   cover <-
