@@ -66,7 +66,9 @@ genotype_violin <-
                   weight = 2) +
       geom_point(size = 2,
                  stroke = 0.5) +
-      scale_y_continuous(trans = y_trans, labels = y_label) +
+      scale_y_continuous(trans = y_trans,
+                         labels = y_label,
+                         expand = expansion(mult = c(0,.1))) +
       labs(x = x_lab,
            y = y_lab,
            title = title_lab) +
