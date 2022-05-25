@@ -41,8 +41,6 @@ genotype_violin <-
            title_lab = "",
            y_trans = "identity",
            y_label = waiver(),
-           x_angle = NULL,
-           x_hjust = NULL,
            color_values = hue_pal()(200),
            shape_values = rep(21, 200),
            fill_values = hue_pal()(200),
