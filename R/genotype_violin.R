@@ -69,9 +69,6 @@ genotype_violin <-
       scale_y_continuous(trans = y_trans,
                          labels = y_label,
                          expand = expansion(mult = c(0,.1))) +
-      labs(x = x_lab,
-           y = y_lab,
-           title = title_lab) +
       theme_clean(base_family = "sans", base_size = 11) +
       theme(
         legend.position = "top",
@@ -94,7 +91,10 @@ genotype_violin <-
                         drop = FALSE) +
       labs(shape = " ",
            fill = " ",
-           color = " ")
+           color = " ",
+           x = x_lab,
+           y = y_lab,
+           title = title_lab)
 
     if (save_plot == TRUE) {
       ggsave(
