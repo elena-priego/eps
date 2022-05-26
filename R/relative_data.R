@@ -11,7 +11,7 @@
 #'
 relative_data <- function(df) {
 
-  df_groups <- colnames(df) %>% setdiff(., c("genotype", "value"))
+  df_groups <- colnames(df) %>% setdiff(., c("genotype", "value", "mice"))
 
   table1 <- df %>%
     mutate(strain = factor(str_replace_all(genotype, "-WT|-KO", "")),
@@ -31,7 +31,7 @@ relative_data <- function(df) {
   table3 <- full_table %>%
     pivot_longer(
       names_to = "genotype",
-      cols = -c("mean", all_of(df_groups)),
+      cols = -c("mean", "mice", all_of(df_groups)),
       values_drop_na = TRUE
     ) %>%
     unnest(cols = everything()) %>%
