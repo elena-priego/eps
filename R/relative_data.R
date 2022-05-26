@@ -14,12 +14,14 @@ relative_data <- function(df) {
   df_groups <- colnames(df) %>% setdiff(., c("genotype", "value"))
 
   table1 <- df %>%
-    mutate(strain = factor(str_replace_all(genotype, "-WT|-KO", ""))) %>%
+    mutate(strain = factor(str_replace_all(genotype, "-WT|-KO", "")),
+           experiment = as.character(experiment)) %>%
     group_by_at(df_groups) %>%
     filter(str_detect(genotype, "WT")) %>%
     summarize(mean = sum(value) / n(), .groups = "keep")
 
   table2 <- df %>%
+    mutate(experiment = as.character(experiment)) %>%
     pivot_wider(names_from = genotype,
                 values_from = value,
                 values_fn = list)
@@ -29,7 +31,7 @@ relative_data <- function(df) {
   table3 <- full_table %>%
     pivot_longer(
       names_to = "genotype",
-      cols = c("genotype", "value"),
+      cols = -c("mean", all_of(df_groups)),
       values_drop_na = TRUE
     ) %>%
     unnest(cols = everything()) %>%
