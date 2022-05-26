@@ -62,11 +62,14 @@ genotype_violin <-
       geom_violin(alpha = 0.5,
                   size = 0.5,
                   weight = 2) +
-      geom_point(size = 2,
-                 stroke = 0.5) +
+      geom_point(
+        size = 2,
+        stroke = 0.5,
+        position = position_jitter(width = .2, height = 0)
+      ) +
       scale_y_continuous(trans = y_trans,
                          labels = y_label,
-                         expand = expansion(mult = c(0,.1))) +
+                         expand = expansion(mult = c(0, .1))) +
       theme_clean(base_family = "sans", base_size = 11) +
       theme(
         legend.position = "top",
@@ -87,12 +90,14 @@ genotype_violin <-
                          values = color_values) +
       scale_fill_manual(values = fill_values,
                         drop = FALSE) +
-      labs(shape = " ",
-           fill = " ",
-           color = " ",
-           x = x_lab,
-           y = y_lab,
-           title = title_lab)
+      labs(
+        shape = " ",
+        fill = " ",
+        color = " ",
+        x = x_lab,
+        y = y_lab,
+        title = title_lab
+      )
 
     if (save_plot == TRUE) {
       ggsave(
