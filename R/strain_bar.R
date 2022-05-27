@@ -4,6 +4,8 @@
 #' @param table tidy table with data comming from the analysis. Columns: genotype, value and experiment (time, mice, treatment, marker, stat, cell)
 #' @param genotype_levels vector will all the genotypes all the analysis
 #' @param strain_levels ordered levels to plot. Default to VHL groups
+#' @param group_diff text to remove from the genotype column to generate the strain by which the relativation groups will be generated. Default to "-WT|-KO"
+#' @param identity_bar Position to plot the bar graph. "identity" to pile, "dodge" to put next to each other. Default to dodge. Depending on the value, the points represented are pilled up by strain or not
 #' @param x_lab  X-axis label
 #' @param y_lab y-axis label
 #' @param title_lab title label
@@ -42,6 +44,8 @@ strain_bar <-
   function(table,
            genotype_levels = c("WT", "KO"),
            strain_levels =  c("VHL", "VHL-HIF1a", "VHL-HIF2a", "VHL-HIF1a-HIF2a"),
+           group_diff = "-WT|-KO",
+           identity_bar = "dodge",
            x_lab = "",
            y_lab = "",
            title_lab = "",
@@ -57,8 +61,10 @@ strain_bar <-
            h = 5,
            save_plot = FALSE,
            print_plot = FALSE) {
+    dg <- ifelse(identity_bar == "identity", 0, 1)
+
     p <- table %>%
-      mutate(strain = factor(str_replace_all(genotype, "-WT|-KO", ""))) %>%
+      mutate(strain = factor(str_replace_all(genotype, group_diff, ""))) %>%
       mutate(strain = factor(strain,
                              levels = strain_levels,
                              ordered = TRUE)) %>%
@@ -73,8 +79,7 @@ strain_bar <-
         shape = genotype
       )) +
       geom_bar(
-        # position = "identity", #to pile
-        position = "dodge", # to put next to each other
+        position = identity_bar,
         stat = "summary",
         alpha = .3,
         fun = mean
@@ -90,8 +95,7 @@ strain_bar <-
           position_jitterdodge(
           jitter.width = 2.5,
           jitter.height = 0,
-          # dodge.width = 0 # if position is identity
-          dodge.width = 1 # if position is dodged
+          dodge.width = dg
         )
       ) +
       scale_y_continuous(trans = y_trans,
