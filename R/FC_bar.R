@@ -4,6 +4,9 @@
 #' @param table tidy table with data coming from the analysis. Columns: genotype, value and experiment (time, mice, treatment, marker, stat, cell)
 #' @param genotype_levels vector will all the genotypes all the analysis
 #' @param strain_levels ordered levels to plot. Default to VHL groups
+#' @param group_diff text to remove from the genotype column to generate the strain by which the relativation groups will be generated. Default to "-WT|-KO"
+#' @param group_control text that identify the group to relativize. Should be included inside group_diff. Default to "WT"
+#' @param group_plot text that identify the group to plot. Should be included inside group_diff. Default to "KO"
 #' @param x_lab  X-axis label
 #' @param y_lab y-axis label
 #' @param title_lab title label
@@ -12,6 +15,7 @@
 #' @param color_values color to be ploted. Same number as levels have genotype . For VHL paper table$VHL_palette_color
 #' @param shape_values shape to be ploted. Same number as levels have genotype. For VHL paper table$VHL_palette_shape
 #' @param fill_values fill color to be ploted. Same number as levels have genotype. For VHL paper table$VHL_palette_fill
+#' @param plot_stat Boolean indicating if include the stat. Default to TRUE.
 #' @param path_output ful name of the generated plot including the path
 #' (recommended path_output from path_builder())
 #' @param w width of the output plot
@@ -40,6 +44,10 @@ FC_bar <-
   function(table,
            genotype_levels = c("WT", "KO"),
            strain_levels =  c("VHL", "VHL-HIF1a", "VHL-HIF2a", "VHL-HIF1a-HIF2a"),
+           group_diff = "-WT|-KO",
+           group_control = "WT",
+           group_plot = "KO",
+           identity_bar = "dodge",
            x_lab = "",
            y_lab = "FC (WT/KO)",
            title_lab = "",
@@ -48,22 +56,26 @@ FC_bar <-
            color_values = hue_pal()(200),
            shape_values = rep(21, 200),
            fill_values = hue_pal()(200),
+           plot_stat = TRUE,
            path_output,
            w = 10,
            h = 5,
            save_plot = FALSE,
            print_plot = FALSE) {
+    dg <- ifelse(identity_bar == "identity", 0, 1)
+
     table1 <- table %>%
-      relative_data() %>%
-      mutate(strain = factor(str_replace_all(genotype, "-WT|-KO", ""))) %>%
+      relative_data(., group_diff, group_control) %>%
+      mutate(strain = factor(str_replace_all(genotype, group_diff, ""))) %>%
       mutate(strain = factor(strain,
                              levels = strain_levels,
                              ordered = TRUE)) %>%
       mutate(genotype = factor(genotype,
                                levels = genotype_levels,
                                ordered = TRUE))
+
     p <- table1 %>%
-      filter(str_detect(genotype, "KO")) %>%
+      filter(str_detect(genotype, group_plot)) %>%
       ggplot(aes(
         strain,
         value,
@@ -71,12 +83,15 @@ FC_bar <-
         color = genotype,
         shape = genotype
       )) +
-      geom_bar(stat = "summary",
+      geom_hline(aes(yintercept = 1), color = "darkgrey")+
+      geom_bar(
+        position = identity_bar,
+        stat = "summary",
                alpha = .3,
                fun = mean) +
       geom_errorbar(stat = "summary",
-                    position = "dodge",
-                    width = 0.25) +
+                    width = 0.25,
+                    position = identity_bar) +
       geom_point(
         aes(x = strain),
         size = 2,
@@ -85,7 +100,7 @@ FC_bar <-
           position_jitterdodge(
             jitter.width = 2.5,
             jitter.height = 0,
-            dodge.width = 1
+            dodge.width = dg
           )
       ) +
       scale_y_continuous(trans = y_trans,
@@ -117,6 +132,33 @@ FC_bar <-
         title = title_lab
       )
 
+
+    if (plot_stat == TRUE){
+    stats <-  compare_means(
+      value ~ genotype,
+      group.by = c("marker", "strain"),
+      data = table1,
+      method = "t.test"
+    )
+
+    y_value <-
+      table1 %>%
+      group_by(marker) %>%
+      top_n(1, value) %>%
+      pull(value) * 1.1
+
+    p <- p +
+      geom_text(
+        data = stats,
+        aes(
+          x = strain,
+          y = rep(y_value, each = 4),
+            label = p.signif),
+        position = "stack",
+        inherit.aes = FALSE
+      )
+    }
+
     if (save_plot == TRUE) {
       ggsave(
         file = path_output,
@@ -125,25 +167,9 @@ FC_bar <-
         bg = "transparent"
       )
     }
+
     if (print_plot == TRUE)
       plot(p)
-
-    stats <-  compare_means(
-      value ~ genotype,
-      group.by = c("marker", "strain"),
-      data = table1,
-      method = "t.test"
-    )
-
-    y_value <- max(table1$value) * 1.1
-
-    p <- p +
-      geom_text(
-        data = stats,
-        aes(x = strain, y = y_value, label = p.signif),
-        inherit.aes = FALSE
-      ) +
-      geom_hline(aes(yintercept = 1), color = "darkgrey")
 
     return(p)
   }
