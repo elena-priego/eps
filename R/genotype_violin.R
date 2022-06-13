@@ -2,6 +2,7 @@
 #'
 #' @param table tidy table with data comming from the analysis. Columns: genotype, value (and experiment)
 #' @param genotype_levels vector will all the genotypes all the analysis
+#' @param genotype_labels name to be display in the legend
 #' @param x_lab X-axis label
 #' @param y_lab y-axis label
 #' @param title_lab title label
@@ -22,6 +23,7 @@
 #' @import here
 #' @import tidyverse
 #' @import ggthemes
+#' @import ggtext
 #'
 #'
 #' @return plot file in data folder
@@ -36,6 +38,7 @@
 genotype_violin <-
   function(table,
            genotype_levels = c("WT", "KO"),
+           genotype_labels = genotype_levels,
            x_lab = "",
            y_lab = "",
            title_lab = "",
@@ -50,7 +53,9 @@ genotype_violin <-
            save_plot = FALSE,
            print_plot = FALSE) {
     p <- table %>%
-      mutate(genotype = factor(genotype, levels = genotype_levels)) %>%
+      mutate(genotype = factor(genotype,
+                               levels = genotype_levels,
+                               labels = genotype_labels)) %>%
       group_by(genotype, experiment) %>%
       ggplot(aes(
         genotype,
@@ -75,12 +80,12 @@ genotype_violin <-
         legend.position = "top",
         legend.background = element_rect(colour = "transparent",
                                          fill = "transparent"),
-        legend.title = element_text(face = "plain", size = 9),
-        legend.text = element_text(size = 9),
+        legend.title = element_markdown(face = "plain", size = 9),
+        legend.text = element_markdown(size = 9),
         axis.title.x = element_blank(),
         axis.text.x = element_blank(),
         axis.ticks.x = element_blank(),
-        plot.title = element_text(face = "plain", size = 10),
+        plot.title = element_markdown(face = "plain", size = 10),
         plot.background = element_rect(colour = NA,
                                        fill = "transparent")
       ) +
