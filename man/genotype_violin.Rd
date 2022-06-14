@@ -7,13 +7,12 @@
 genotype_violin(
   table,
   genotype_levels = c("WT", "KO"),
+  genotype_labels = genotype_levels,
   x_lab = "",
   y_lab = "",
   title_lab = "",
   y_trans = "identity",
   y_label = waiver(),
-  x_angle = NULL,
-  x_hjust = NULL,
   color_values = hue_pal()(200),
   shape_values = rep(21, 200),
   fill_values = hue_pal()(200),
@@ -29,6 +28,8 @@ genotype_violin(
 
 \item{genotype_levels}{vector will all the genotypes all the analysis}
 
+\item{genotype_labels}{name to be display in the legend}
+
 \item{x_lab}{X-axis label}
 
 \item{y_lab}{y-axis label}
@@ -38,10 +39,6 @@ genotype_violin(
 \item{y_trans}{transformation of the y axis}
 
 \item{y_label}{default to waiver. Could be scientific_format()}
-
-\item{x_angle}{Angle to display the x axis}
-
-\item{x_hjust}{Justificacion of the x axis}
 
 \item{color_values}{color to be ploted. Same number as levels have genotype . For VHL paper table$VHL_palette_color}
 
@@ -59,6 +56,10 @@ genotype_violin(
 \item{save_plot}{Boolean indicating if the plot is saved or not. Default to FALSE.}
 
 \item{print_plot}{Boolean indicating if the plot is printed or not. Default to TRUE.}
+
+\item{x_angle}{Angle to display the x axis}
+
+\item{x_hjust}{Justificacion of the x axis}
 }
 \value{
 plot file in data folder

@@ -7,6 +7,7 @@
 genotype_paired_violin(
   table,
   genotype_levels = c("WT", "KO"),
+  genotype_labels = genotype_levels,
   y_value = value,
   x_lab = "",
   y_lab = "",
@@ -26,6 +27,8 @@ genotype_paired_violin(
 
 \item{genotype_levels}{vector will all the genotypes all the analysis}
 
+\item{genotype_labels}{name to be display in the legend}
+
 \item{x_lab}{X-axis label}
 
 \item{y_lab}{y-axis label}
@@ -38,7 +41,7 @@ genotype_paired_violin(
 
 \item{fill_values}{fill color to be ploted. Same number as levels have genotype. For VHL paper table$VHL_palette_fill}
 
-\item{path_output}{ful name of the generated plot including the path
+\item{path_output}{full name of the generated plot including the path
 (recommended path_output from path_builder())}
 
 \item{w}{width of the output plot}
