@@ -20,5 +20,6 @@ A copy of the GNU General Public License, version 3, is available at [link](http
 -   `devtools::document()` to generate the Rd and update NAMESPACE  
 -   `devtools::build()` to generate the package  
 -   `devtools::check()` to look for errors and warnings  
+-   `devtools::build_vignettes()`to generate vignette
 -   `use_data(object, eps, overwrite = TRUE)` to save an object in data. There's need to create an R file with Roxygen documentation.
 -   inst folder have installed packages in my computer
