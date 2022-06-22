@@ -1,8 +1,8 @@
 #' Boxplot plot by genotype
 #'
-#' Boxplot to plot tidy standard data by genotype
+#' Boxplot for tidy standard data by genotype
 #'
-#' @param table tidy table coming form facs_tidytable
+#' @param table tidy table with time, mice, genotype, treatment, marker, stat, value, experiment and cell columns
 #' @param organ.i optional organ selected to plot (specimen in .fcs file)
 #' @param stat.i optional statistic selected to plot
 #' @param marker.i optional marker selected to plot
@@ -16,9 +16,9 @@
 #' @param x_lab x-axis label
 #' @param y_lab y-axis label
 #' @param y_limit inferior limit for y-axis
-#' @param x_angle angle of the labels of the x-axis. NULL for horizontal,
-#' 45 for inclination
-#' @param x_hjust horizontal justification of the labels of the x-axis
+#' @param x_angle angle of the labels of the x-axis.
+#' @param x_hjust justification of the labels of the x-axis
+#' @param leyend_position Legend position. Default to top. Could also be right, left or bottom
 #' @param color_values color to be ploted. Same number as levels have genotype .
 #' @param shape_values shape to be ploted. Same number as levels have genotype. For
 #' @param fill_values fill color to be ploted. Same number as levels have genotype.
@@ -26,8 +26,6 @@
 #' @param w width of the output plot
 #' @param h high of the output plot
 #' @param print_plot boolean indicating if the plot is printed or not. Default to TRUE.
-
-
 #'
 #' @import here
 #' @import tidyverse
@@ -37,16 +35,10 @@
 #' @export
 #'
 #' @examples
-#' comb <- as_tibble(unique(paste(table$organ, table$stat, table$marker,
-#'                                sep = "_-_"))) %>%
-#'         separate(value, into = c("organ", "stat", "marker"), sep = "_-_") %>%
-#'         mutate(output = here(path_output,
-#'                              paste0(organ, "_", stat, "_", marker, ".png")),
-#'                y_lab = paste0(marker, " (", stat, ")")) %>% as.data.frame()
-#'
-#' apply(comb, 1, function(x) facs_boxplot(table, organ.i = x[1], stat.i = x[2],
-#'   marker.i = x[3], path_output = x[4], y_lab = x[5],
-#'   title.i = x[1]))
+#' genotype_violin(genotype_levels = VHL_table$genotypes,
+#' color_values = VHL_table$palette_color,
+#' shape_values = VHL_table$palette_shape,
+#' fill_values = VHL_table$palette_fill)
 
 
 
@@ -68,6 +60,8 @@ facs_boxplot <-
            y_trans = "identity",
            x_angle = 45,
            x_hjust = 1,
+           x_labels = waiver(),
+           leyend_position = "top",
            color_values = colorRamps::primary.colors(),
            shape_values = rep(21, 200),
            fill_values = color_values,
@@ -103,8 +97,7 @@ facs_boxplot <-
       scale_y_continuous(trans = y_trans,
                          expand = expansion(mult = c(0, .1))) +
       expand_limits(y = y_limit) +
-      scale_x_discrete(labels = waiver()) +
-      theme_clean(base_family = "sans", base_size = 11)  +
+      scale_x_discrete(labels = x_labels) +
       labs(
         shape = " ",
         fill = " ",
@@ -113,9 +106,9 @@ facs_boxplot <-
         y = y_lab,
         title = title_lab
       ) +
+      theme_clean(base_family = "sans", base_size = 11) +
       theme(
-        strip.text.x = element_blank(),
-        legend.position = "right",
+        legend.position = leyend_position,
         legend.background = element_rect(colour = "transparent",
                                          fill = "transparent"),
         legend.title = element_markdown(face = "plain", size = 9),
