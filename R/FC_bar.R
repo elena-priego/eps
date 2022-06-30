@@ -2,7 +2,7 @@
 #' Plot by column showing FC (KO/WT)
 #'
 #' @param table tidy table with data coming from the analysis. Columns: genotype, value and experiment (time, mice, treatment, marker, stat, cell)
-#' @param genotype_levels vector will all the genotypes all the analysis
+#' @param genotype_levels vector with all the genotypes all the analysis
 #' @param strain_levels ordered levels to plot. Default to VHL groups
 #' @param group_diff text to remove from the genotype column to generate the strain by which the relativation groups will be generated. Default to "-WT|-KO"
 #' @param group_control text that identify the group to relativize. Should be included inside group_diff. Default to "WT"
