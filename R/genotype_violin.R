@@ -11,6 +11,7 @@
 #' @param treatment.i optional treatment selected to plot
 #' @param genotype_levels vector will all the genotypes all the analysis
 #' @param genotype_labels name to be display in the legend. In markdown/html format.
+#' @param jitter_width width of the points
 #' @param x_value column name to plot
 #' @param x_lab X-axis label
 #' @param y_lab y-axis label
@@ -46,6 +47,7 @@
 genotype_violin <-
   function(table,
            organ.i = NULL,
+           experiment.i = NULL,
            stat.i = NULL,
            time.i = NULL,
            marker.i = NULL,
@@ -53,6 +55,7 @@ genotype_violin <-
            treatment.i = NULL,
            genotype_levels = c("WT", "KO"),
            genotype_labels = genotype_levels,
+           jitter_width = 0.3,
            x_value = "genotype",
            x_lab = "",
            y_lab = "",
@@ -69,9 +72,10 @@ genotype_violin <-
            path_output = NULL,
            w = 10,
            h = 5,
-           print_plot = TRUE) {
+           print_plot = FALSE) {
     p <- table %>%
       {if (!is.null(organ.i)) filter(., organ == organ.i) else .} %>%
+      {if (!is.null(experiment.i)) filter(., experiment == experiment.i) else .} %>%
       {if (!is.null(time.i)) filter(., time == time.i) else .} %>%
       {if (!is.null(treatment.i)) filter(., treatment == treatment.i) else .} %>%
       {if (!is.null(stat.i)) filter(., stat == stat.i) else .} %>%
@@ -92,7 +96,7 @@ genotype_violin <-
                   size = 0.5,
                   weight = 2) +
       geom_point(
-        position = position_jitterdodge(jitter.width = 0.3),
+        position = position_jitterdodge(jitter.width = jitter_width),
         alpha = 0.7,
         size = 3,
         stroke = 0
