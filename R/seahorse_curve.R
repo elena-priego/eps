@@ -2,11 +2,13 @@
 #'
 #' @param table tidy table with data comming from the analysis. Columns: time, genotype, mice, value
 #' @param genotype_levels vector will all the genotypes all the analysis
+#' @param genotype_labels name to be display in the legend. In markdown/html format.
 #' @param x_lab X-axis label
 #' @param y_lab y-axis label
 #' @param title.i title label
 #' @param x_angle Angle to display the x axis
 #' @param x_hjust Justificacion of the x axis
+#' @param legend_position Legend position. Default to top. Could also be right, left or bottom
 #' @param color_values color to be ploted. Same number as levels have genotype . For VHL paper table$VHL_palette_color
 #' @param shape_values shape to be ploted. Same number as levels have genotype. For VHL paper table$VHL_palette_shape
 #' @param fill_values fill color to be ploted. Same number as levels have genotype. For VHL paper table$VHL_palette_fill
@@ -38,8 +40,9 @@
 seahorse_curve <-
   function(table,
            genotype_levels = c("WT", "KO"),
+           genotype_labels = genotype_levels,
            x_lab = "Time (minutes)",
-           y_lab = "Oxygen Consumption Rate (OCR) \n (pmol/min)",
+           y_lab = "Oxygen Consumption Rate<br /> (pmol/min)",
            title_lab = "",
            x_angle = 0,
            x_hjust = 0.5,
@@ -47,6 +50,7 @@ seahorse_curve <-
            shape_values = rep(21, 200),
            fill_values = hue_pal()(200),
            lty_values = rep("solid", 200),
+           leyend_position = "top",
            path_output = "plot.png",
            w = 10,
            h = 5,
@@ -54,7 +58,9 @@ seahorse_curve <-
            print_plot = FALSE) {
     # used_genotypes <- c(unique(table$genotype))
     p <- table %>%
-      mutate(genotype = factor(genotype, levels = genotype_levels)) %>%
+      mutate(genotype = factor(genotype,
+                               levels = genotype_levels,
+                               labels = genotype_labels)) %>%
       group_by(genotype, time, experiment) %>%
       dplyr::summarise(
         mean = mean(value),
@@ -77,16 +83,18 @@ seahorse_curve <-
       scale_x_continuous() +
       theme_clean(base_family = "sans", base_size = 11) +
       theme(
-        strip.text.x = element_blank(),
-        legend.position = "top",
+        legend.position = leyend_position,
         legend.background = element_rect(colour = "transparent",
                                          fill = "transparent"),
-        legend.title = element_text(face = "plain", size = 9),
-        legend.text = element_text(size = 9),
-        plot.title = element_text(face = "plain", size = 10),
-        axis.text.x = element_text(angle = x_angle, hjust = x_hjust),
+        legend.title = element_markdown(face = "plain", size = 9),
+        legend.text = element_markdown(size = 9),
+        axis.text.x = element_markdown(angle = x_angle, hjust = x_hjust),
+        plot.title = element_markdown(face = "plain", size = 10),
         plot.background = element_rect(colour = NA,
-                                       fill = "transparent")
+                                       fill = "transparent"),
+        # strip.text.x = element_blank(),
+        axis.title.y = element_markdown(),
+        axis.title.x = element_markdown()
       ) +
       scale_shape_manual(values = shape_values,
                          drop = FALSE) +
