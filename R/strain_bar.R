@@ -118,7 +118,6 @@ strain_bar <-
       scale_shape_manual(values = shape_values, drop = FALSE) +
       scale_color_manual(values = color_values, drop = FALSE) +
       scale_fill_manual(values =  fill_values, drop = FALSE) +
-      scale_y_continuous(expand = expansion(mult = c(0, .1))) +
       labs(shape = " ",
            fill = " ",
            color = " ",
