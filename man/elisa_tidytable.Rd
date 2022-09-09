@@ -33,9 +33,6 @@ elisa_tidytable(
 
 \item{plot_curve}{print the fitted plot}
 }
-\value{
-
-}
 \description{
 Make tidytable from ELISA
 Function to calculate the concentrations of ELISA experiments giving two files as input, one coming from the spectrometer with the raw OD data and other with a template of the plate used. In the template is expected to be at least 1 point of blank_0 that will be subtracted to all values and two or more values from a standard curve labelled as standard_0, standard_10 ... For samples well the format is name_concentration as proportion of samples (for example a sample diluted 1/2 would be 0.5)

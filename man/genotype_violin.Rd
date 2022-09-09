@@ -6,29 +6,57 @@
 \usage{
 genotype_violin(
   table,
+  organ.i = NULL,
+  experiment.i = NULL,
+  stat.i = NULL,
+  time.i = NULL,
+  marker.i = NULL,
+  cell.i = NULL,
+  treatment.i = NULL,
   genotype_levels = c("WT", "KO"),
   genotype_labels = genotype_levels,
+  jitter_width = 0.3,
+  x_value = "genotype",
   x_lab = "",
   y_lab = "",
   title_lab = "",
   y_trans = "identity",
-  y_label = waiver(),
-  color_values = hue_pal()(200),
+  y_limit = 0,
+  x_angle = 90,
+  x_hjust = 0.5,
+  x_labels = waiver(),
+  leyend_position = "top",
+  color_values = colorRamps::primary.colors(),
   shape_values = rep(21, 200),
-  fill_values = hue_pal()(200),
-  path_output,
+  fill_values = color_values,
+  path_output = NULL,
   w = 10,
   h = 5,
-  save_plot = FALSE,
   print_plot = FALSE
 )
 }
 \arguments{
-\item{table}{tidy table with data comming from the analysis. Columns: genotype, value (and experiment)}
+\item{table}{tidy table with time, mice, genotype, treatment, marker, stat, value, experiment and cell columns}
+
+\item{organ.i}{optional organ selected to plot (specimen in .fcs file)}
+
+\item{stat.i}{optional statistic selected to plot}
+
+\item{time.i}{optional time selected to plot}
+
+\item{marker.i}{optional marker selected to plot}
+
+\item{cell.i}{optional cell selected to plot}
+
+\item{treatment.i}{optional treatment selected to plot}
 
 \item{genotype_levels}{vector will all the genotypes all the analysis}
 
-\item{genotype_labels}{name to be display in the legend}
+\item{genotype_labels}{name to be display in the legend. In markdown/html format.}
+
+\item{jitter_width}{width of the points}
+
+\item{x_value}{column name to plot}
 
 \item{x_lab}{X-axis label}
 
@@ -38,34 +66,35 @@ genotype_violin(
 
 \item{y_trans}{transformation of the y axis}
 
-\item{y_label}{default to waiver. Could be scientific_format()}
+\item{y_limit}{inferior limit for y-axis}
 
-\item{color_values}{color to be ploted. Same number as levels have genotype . For VHL paper table$VHL_palette_color}
+\item{x_angle}{Angle to display the x axis}
 
-\item{shape_values}{shape to be ploted. Same number as levels have genotype. For VHL paper table$VHL_palette_shape}
+\item{x_hjust}{Justificacion of the x axis}
 
-\item{fill_values}{fill color to be ploted. Same number as levels have genotype. For VHL paper table$VHL_palette_fill}
+\item{leyend_position}{Legend position. Default to top. Could also be right, left or bottom}
 
-\item{path_output}{ful name of the generated plot including the path
-(recommended path_output from path_builder())}
+\item{color_values}{color to be ploted. Same number as levels have genotype.}
+
+\item{shape_values}{shape to be ploted. Same number as levels have genotype.}
+
+\item{fill_values}{fill color to be ploted. Same number as levels have genotype.}
+
+\item{path_output}{Optional. Full file name desired (e.g. here(path_output, "plot.pdf"))}
 
 \item{w}{width of the output plot}
 
 \item{h}{high of the output plot}
 
-\item{save_plot}{Boolean indicating if the plot is saved or not. Default to FALSE.}
-
 \item{print_plot}{Boolean indicating if the plot is printed or not. Default to TRUE.}
 
-\item{x_angle}{Angle to display the x axis}
-
-\item{x_hjust}{Justificacion of the x axis}
+\item{y_label}{default to waiver. Could be scientific_format()}
 }
 \value{
 plot file in data folder
 }
 \description{
-Violin plot by genotype
+Violin for tidy standard data by genotype
 }
 \examples{
 genotype_violin(genotype_levels = VHL_table$genotypes,

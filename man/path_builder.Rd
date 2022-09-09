@@ -9,9 +9,6 @@ path_builder(experiment_name)
 \arguments{
 \item{experiment_name}{Full name of the experiment}
 }
-\value{
-
-}
 \description{
 Generate the pathways to save the files of the projects and create specific
 folders in data, raw and output. The pathways are saved in R environment to

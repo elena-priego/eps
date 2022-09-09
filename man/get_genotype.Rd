@@ -23,9 +23,6 @@ with \code{data(micecode)}}
 
 \item{csv_sep}{separator for the csv file. Default to ","}
 }
-\value{
-
-}
 \description{
 Extract mice number and genotype from multiple files
 animalario*.csv pattern as default download in english layout

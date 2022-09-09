@@ -7,8 +7,9 @@
 seahorse_curve(
   table,
   genotype_levels = c("WT", "KO"),
+  genotype_labels = genotype_levels,
   x_lab = "Time (minutes)",
-  y_lab = "Oxygen Consumption Rate (OCR) \\n (pmol/min)",
+  y_lab = "Oxygen Consumption Rate<br /> (pmol/min)",
   title_lab = "",
   x_angle = 0,
   x_hjust = 0.5,
@@ -16,6 +17,7 @@ seahorse_curve(
   shape_values = rep(21, 200),
   fill_values = hue_pal()(200),
   lty_values = rep("solid", 200),
+  leyend_position = "top",
   path_output = "plot.png",
   w = 10,
   h = 5,
@@ -27,6 +29,8 @@ seahorse_curve(
 \item{table}{tidy table with data comming from the analysis. Columns: time, genotype, mice, value}
 
 \item{genotype_levels}{vector will all the genotypes all the analysis}
+
+\item{genotype_labels}{name to be display in the legend. In markdown/html format.}
 
 \item{x_lab}{X-axis label}
 
@@ -56,6 +60,8 @@ seahorse_curve(
 \item{print_plot}{boolean indicating if the plot is printed or not. Default to TRUE.}
 
 \item{title.i}{title label}
+
+\item{legend_position}{Legend position. Default to top. Could also be right, left or bottom}
 }
 \value{
 plot file in data folder

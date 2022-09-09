@@ -18,9 +18,6 @@ weight_statistics(
 
 \item{file_name}{Name of the output file. "statistic.txt" by default.}
 }
-\value{
-
-}
 \description{
 weight_statistics
 Function to perform the statistic analysis of the weight-loss curve experiments.

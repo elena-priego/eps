@@ -11,9 +11,6 @@ experiment_init(experiment_name)
 structure: project, "hash", year, experiment number, "underscore",
 experiment title}
 }
-\value{
-
-}
 \description{
 Generate the folders associated to the experiment in data, raw and output and
 creation of the cover page in an Rmd to write the protocol and the analysis.

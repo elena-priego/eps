@@ -45,9 +45,6 @@ the relative porcentage to day 1}
 The default for the format methods is "\%d.\%b" that is for format "01.jul".
 Other common format are \%d-\%m}
 }
-\value{
-
-}
 \description{
 weight_tidytable
 }

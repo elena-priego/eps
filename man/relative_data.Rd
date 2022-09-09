@@ -14,9 +14,6 @@ relative_data(df, group_diff = "-WT|-KO", group_control = "WT")
 
 \item{group_control}{text that identify the control group to relative by. Should be included inside group_diff. Default to "WT"}
 }
-\value{
-
-}
 \description{
 Make relative data to genotype
 Make relative data to WT samples from each experiment. representing this as 1.

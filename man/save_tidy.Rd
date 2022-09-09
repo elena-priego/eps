@@ -11,9 +11,6 @@ save_tidy(table, path_output = path_output)
 
 \item{path_output}{generated with eps::path_builder()}
 }
-\value{
-
-}
 \description{
 save_tidy
 }

@@ -11,9 +11,6 @@ cover_init(experiment_name)
 structure: project, "hash", year, experiment number, "underscore",
 experiment title}
 }
-\value{
-
-}
 \description{
 Creation of the cover page in an Rmd to write the protocol and the analysis.
 Should be used directly in the console within the project folder

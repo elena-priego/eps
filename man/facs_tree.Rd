@@ -14,9 +14,6 @@ taken}
 
 \item{group}{analysis group to be plotted. As defaul all Samples (gate 1)}
 }
-\value{
-
-}
 \description{
 Plot showing the gatting hierarchy
 }

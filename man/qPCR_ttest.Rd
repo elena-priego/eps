@@ -26,9 +26,6 @@ group_by(Target, genotype) \%>\%
 summarise(n=n()) \%>\%
 pivot_wider(id_cols=Target, names_from = genotype, values_from = n, values_fill = 0)}
 }
-\value{
-
-}
 \description{
 ttest analysis form qPCR
 }
