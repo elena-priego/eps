@@ -2,10 +2,17 @@
 #' plot a weight-loss curve with the mean value of each genotype by day
 #'
 #' @param table tidy table coming form facs_tidytable
-#' @param title.i title of the plot
+#' @param organ.i optional organ selected to plot (specimen in .fcs file)
+#' @param stat.i optional statistic selected to plot
+#' @param marker.i optional marker selected to plot
+#' @param cell.i optional cell selected to plot
+#' @param time.i optional time selected to plot
+#' @param treatment.i optional treatment selected to plot
+#' @param title_lab title of the plot. Previously title.i
 #' @param x_lab x-axis label
 #' @param y_lab y-axis label
 #' @param y_limit inferior limit for y-axis
+#' @param leyend_position Legend position. Default to top. Could also be right, left or bottom
 #' @param color_values 	a set of aesthetic values to map data values to.
 #' The values will be matched in order (usually alphabetical).
 #' @param color_breaks takes the limits as input and returns breaks as output
@@ -20,6 +27,7 @@
 #' @import here
 #' @import tidyverse
 #' @import ggthemes
+#' @import ggtext
 #'
 #' @return plot file in data folder
 #' @export
@@ -30,10 +38,18 @@
 #'
 weight_mean_plot <-
   function(table,
-           title.i = "",
+           organ.i = NULL,
+           experiment.i = NULL,
+           stat.i = NULL,
+           time.i = NULL,
+           marker.i = NULL,
+           cell.i = NULL,
+           treatment.i = NULL,
+           title_lab = "",
            x_lab = "",
            y_lab = "",
            y_limit = 0,
+           leyend_position = "right",
            color_values = RColorBrewer::brewer.pal(8, "Paired")[7:8],
            color_breaks = waiver(),
            color_labels = waiver(),
@@ -43,6 +59,13 @@ weight_mean_plot <-
            save_plot = TRUE,
            print_plot = FALSE) {
     p <- table %>%
+      {if (!is.null(organ.i)) filter(., organ == organ.i) else .} %>%
+      {if (!is.null(experiment.i)) filter(., experiment == experiment.i) else .} %>%
+      {if (!is.null(time.i)) filter(., time == time.i) else .} %>%
+      {if (!is.null(treatment.i)) filter(., treatment == treatment.i) else .} %>%
+      {if (!is.null(stat.i)) filter(., stat == stat.i) else .} %>%
+      {if (!is.null(marker.i)) filter(., marker == marker.i) else .} %>%
+      {if (!is.null(cell.i)) filter(., cell == cell.i) else .} %>%
       drop_na() %>%
       mutate(day = lubridate::ymd(day)) %>%
       group_by(genotype, day) %>%
@@ -60,19 +83,23 @@ weight_mean_plot <-
       geom_errorbar(aes(ymin=mean-se,ymax=mean+se),width=0.2)+
       geom_line(size = 0.5)+
       scale_x_date(date_labels = "%d-%b") +
-      labs(x = x_lab, y = y_lab, title = title.i) +
-      scale_y_continuous() +
+      labs(x = x_lab, y = y_lab, title = title_lab) +
+      scale_y_continuous(trans = y_trans,
+                         expand = expansion(mult = c(0, .1))) +
       expand_limits(y = y_limit) +
-      theme_clean(base_family = "sans", base_size = 15) +
+      theme_clean(base_family = "sans", base_size = 11) +
       theme(
         strip.text.x = element_blank(),
-        legend.position = "right",
+        legend.position = leyend_position,
         legend.background = element_rect(colour = "transparent",
                                          fill = "transparent"),
-        legend.title = element_text(face = "plain", size = 15),
-        legend.text = element_text(size = 10),
+        legend.title = element_markdown(face = "plain", size = 9),
+        legend.text = element_markdown(size = 9),
         plot.background = element_rect(colour = NA,
-                                       fill = "transparent")
+                                       fill = "transparent"),
+        plot.title = element_markdown(face = "plain", size = 10),
+        axis.title.y = element_markdown(),
+        axis.title.x = element_markdown()
       ) +
       scale_color_manual(
         values = color_values,
