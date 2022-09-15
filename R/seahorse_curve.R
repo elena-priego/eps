@@ -5,7 +5,7 @@
 #' @param genotype_labels name to be display in the legend. In markdown/html format.
 #' @param x_lab X-axis label
 #' @param y_lab y-axis label
-#' @param title.i title label
+#' @param title_lab title label
 #' @param x_angle Angle to display the x axis
 #' @param x_hjust Justificacion of the x axis
 #' @param legend_position Legend position. Default to top. Could also be right, left or bottom
@@ -13,11 +13,10 @@
 #' @param shape_values shape to be ploted. Same number as levels have genotype. For VHL paper table$VHL_palette_shape
 #' @param fill_values fill color to be ploted. Same number as levels have genotype. For VHL paper table$VHL_palette_fill
 #' @param lty_values line structure. to be ploted. Same number as levels have genotype. For VHL paper table$VHL_palette_lty
-#' @param path_output ful name of the generated plot including the path
+#' @param path_output full name of the generated plot including the path
 #' (recommended path_output from path_builder())
 #' @param w width of the output plot
 #' @param h high of the output plot
-#' @param save_plot boolean indicating if the plot is saved or not. Default to FALSE.
 #' @param print_plot boolean indicating if the plot is printed or not. Default to TRUE.
 #'
 #' @import here
@@ -46,9 +45,9 @@ seahorse_curve <-
            title_lab = "",
            x_angle = 0,
            x_hjust = 0.5,
-           color_values = hue_pal()(200),
+           color_values = scales::hue_pal()(200),
            shape_values = rep(21, 200),
-           fill_values = hue_pal()(200),
+           fill_values = scales::hue_pal()(200),
            lty_values = rep("solid", 200),
            leyend_position = "top",
            path_output = "plot.png",
@@ -110,7 +109,7 @@ seahorse_curve <-
         lty = " ",
         color = " "
       )
-    if (save_plot == TRUE) {
+    if (!is.null(path_output)) {
       ggsave(
         file = path_output,
         width = w,
