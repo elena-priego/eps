@@ -8,7 +8,6 @@
 #' @param cell.i optional cell selected to plot
 #' @param time.i optional time selected to plot
 #' @param treatment.i optional treatment selected to plot
-
 #' @param genotype_levels vector will all the genotypes all the analysis
 #' @param genotype_labels name to be display in the legend. In markdown/html format.
 #' @param x_value column name to plot
@@ -16,13 +15,12 @@
 #' @param x_lab x-axis label
 #' @param y_lab y-axis label
 #' @param y_limit inferior limit for y-axis
-#' 
 #' @param x_angle angle of the labels of the x-axis.
 #' @param x_hjust justification of the labels of the x-axis
 #' @param leyend_position Legend position. Default to top. Could also be right, left or bottom
 #' @param color_values 	a set of aesthetic values to map data values to.
 #' The values will be matched in order (usually alphabetical).
-#' @param shape_values shape to be ploted. Same number as levels have genotype. 
+#' @param shape_values shape to be ploted. Same number as levels have genotype.
 #' @param fill_values fill color to be ploted. Same number as levels have genotype.
 #' @param lty_values color to fill the lines
 #' @param color_breaks takes the limits as input and returns breaks as output
@@ -68,7 +66,7 @@ mean_plot <-
            color_values = colorRamps::primary.colors(),
            shape_values = rep(21, 200),
            fill_values = color_values,
-           lty_values = color_values, 
+           lty_values = color_values,
            color_labels = waiver(),
            path_output = NULL,
            w = 10,
