@@ -8,6 +8,7 @@
 #' @param cell.i optional cell selected to plot
 #' @param time.i optional time selected to plot
 #' @param treatment.i optional treatment selected to plot
+#' @param legend.i possition of parameter legend
 #' @param genotype_levels vector will all the genotypes all the analysis
 #' @param genotype_labels name to be display in the legend. In markdown/html format.
 #' @param x_lab x-axis label
@@ -30,6 +31,7 @@ pca_plot <- function(table,
                      marker.i = NULL,
                      cell.i = NULL,
                      treatment.i = NULL,
+                     legend.i = "none",
                      genotype_levels = c("WT", "KO"),
                      genotype_labels = genotype_levels,
                      title_lab = "",
@@ -51,7 +53,7 @@ pca_plot <- function(table,
     geom_point(alpha = 0.7, size = 3, stroke = 0) + 
     labs(shape = " ", fill = " ", color = " ", x = x_lab, y = y_lab, title = title_lab) + 
     theme_clean(base_family = "sans", base_size = 11) + 
-    theme(legend.position = "none", 
+    theme(legend.position = legend.i, 
           legend.background = element_rect(colour = "transparent", fill = "transparent"),
           legend.title = element_markdown(face = "plain", size = 9), 
           legend.text = element_markdown(size = 9), 
