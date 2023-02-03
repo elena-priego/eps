@@ -74,7 +74,7 @@ seahorse_curve <-
         fill = genotype,
         lty = genotype
       )) +
-      geom_errorbar(aes(ymin = mean - se, ymax = mean + se), width = 1) +
+      geom_errorbar(aes(ymin = mean - se, ymax = mean + se), width = 7) +
       geom_line(size = 1) +
       geom_point(size = 2,
                  stroke = 0.5) +
@@ -85,6 +85,7 @@ seahorse_curve <-
         legend.position = leyend_position,
         legend.background = element_rect(colour = "transparent",
                                          fill = "transparent"),
+        panel.grid.major.y = element_blank(),
         legend.title = element_markdown(face = "plain", size = 9),
         legend.text = element_markdown(size = 9),
         axis.text.x = element_markdown(angle = x_angle, hjust = x_hjust),
