@@ -17,6 +17,7 @@ genotype_violin(
   genotype_labels = genotype_levels,
   jitter_width = 0.3,
   x_value = "genotype",
+  plot_mean = TRUE,
   x_lab = "",
   y_lab = "",
   title_lab = "",
@@ -57,6 +58,8 @@ genotype_violin(
 \item{jitter_width}{width of the points}
 
 \item{x_value}{column name to plot}
+
+\item{plot_mean}{boolean to plot the mean}
 
 \item{x_lab}{X-axis label}
 

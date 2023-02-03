@@ -91,15 +91,19 @@ facs_boxplot(
 
 \item{y_limit}{inferior limit for y-axis}
 
+\item{y_trans}{transformation of y axis}
+
 \item{x_angle}{angle of the labels of the x-axis.}
 
 \item{x_hjust}{justification of the labels of the x-axis}
+
+\item{x_labels}{labels for x axis}
 
 \item{leyend_position}{Legend position. Default to top. Could also be right, left or bottom}
 
 \item{color_values}{color to be ploted. Same number as levels have genotype .}
 
-\item{shape_values}{shape to be ploted. Same number as levels have genotype. For}
+\item{shape_values}{shape to be ploted. Same number as levels have genotype.}
 
 \item{fill_values}{fill color to be ploted. Same number as levels have genotype.}
 

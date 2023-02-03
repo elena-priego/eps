@@ -13,9 +13,9 @@ seahorse_curve(
   title_lab = "",
   x_angle = 0,
   x_hjust = 0.5,
-  color_values = hue_pal()(200),
+  color_values = (scales::hue_pal())(200),
   shape_values = rep(21, 200),
-  fill_values = hue_pal()(200),
+  fill_values = (scales::hue_pal())(200),
   lty_values = rep("solid", 200),
   leyend_position = "top",
   path_output = "plot.png",
@@ -36,6 +36,8 @@ seahorse_curve(
 
 \item{y_lab}{y-axis label}
 
+\item{title_lab}{title label}
+
 \item{x_angle}{Angle to display the x axis}
 
 \item{x_hjust}{Justificacion of the x axis}
@@ -48,18 +50,14 @@ seahorse_curve(
 
 \item{lty_values}{line structure. to be ploted. Same number as levels have genotype. For VHL paper table$VHL_palette_lty}
 
-\item{path_output}{ful name of the generated plot including the path
+\item{path_output}{full name of the generated plot including the path
 (recommended path_output from path_builder())}
 
 \item{w}{width of the output plot}
 
 \item{h}{high of the output plot}
 
-\item{save_plot}{boolean indicating if the plot is saved or not. Default to FALSE.}
-
 \item{print_plot}{boolean indicating if the plot is printed or not. Default to TRUE.}
-
-\item{title.i}{title label}
 
 \item{legend_position}{Legend position. Default to top. Could also be right, left or bottom}
 }

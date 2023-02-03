@@ -22,7 +22,7 @@ composition_bar(
   color_values = hue_pal()(200),
   fill_values = hue_pal()(200),
   plot_stat = TRUE,
-  path_output,
+  path_output = NULL,
   w = 10,
   h = 5,
   save_plot = FALSE,
