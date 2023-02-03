@@ -13,6 +13,7 @@
 #' @param genotype_labels name to be display in the legend. In markdown/html format.
 #' @param jitter_width width of the points
 #' @param x_value column name to plot
+#' @param plot_mean boolean to plot the mean
 #' @param x_lab X-axis label
 #' @param y_lab y-axis label
 #' @param y_limit inferior limit for y-axis
@@ -57,6 +58,7 @@ genotype_violin <-
            genotype_labels = genotype_levels,
            jitter_width = 0.3,
            x_value = "genotype",
+           plot_mean = TRUE,
            x_lab = "",
            y_lab = "",
            title_lab = "",
@@ -93,7 +95,7 @@ genotype_violin <-
         shape = genotype
       )) +
       geom_violin(alpha = 0.5,
-                  size = 0.5,
+                  linewidth = 0.5,
                   weight = 2) +
       geom_point(
         position = position_jitterdodge(jitter.width = jitter_width),
@@ -119,10 +121,11 @@ genotype_violin <-
         legend.position = leyend_position,
         legend.background = element_rect(colour = "transparent",
                                          fill = "transparent"),
+        panel.grid.major.y = element_blank(),
         legend.title = element_markdown(face = "plain", size = 9),
         legend.text = element_markdown(size = 9),
         axis.text.x = element_markdown(angle = x_angle, hjust = x_hjust),
-        plot.title = element_markdown(face = "plain", size = 10),
+        plot.title = element_markdown(face = "plain", size = 10, hjust = 0.5),
         plot.background = element_rect(colour = NA,
                                        fill = "transparent"),
         axis.title.y = element_markdown(),
@@ -134,6 +137,11 @@ genotype_violin <-
                          values = color_values) +
       scale_fill_manual(values = fill_values,
                         drop = FALSE)
+    if (plot_mean == TRUE) {
+      p <- p +
+        stat_summary(fun = "mean", geom = "crossbar", linewidth = 0.2,
+                     position = position_jitterdodge(jitter.width = jitter_width))
+    }
     if (!is.null(path_output)) {
       ggsave(
         file = path_output,
