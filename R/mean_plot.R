@@ -123,6 +123,7 @@ mean_plot <-
         legend.position = leyend_position,
         legend.background = element_rect(colour = "transparent",
                                          fill = "transparent"),
+        panel.grid.major.y = element_blank(),
         legend.title = element_markdown(face = "plain", size = 9),
         legend.text = element_markdown(size = 9),
         plot.background = element_rect(colour = NA,
