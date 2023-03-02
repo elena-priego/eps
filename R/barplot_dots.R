@@ -136,6 +136,7 @@ barplot_dots <-
         position = identity_bar,
         stat = "summary",
         alpha = .3,
+        width = dg,
         fun = mean
       ) +
       geom_errorbar(
