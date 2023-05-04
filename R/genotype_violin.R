@@ -140,7 +140,8 @@ genotype_violin <-
     if (plot_mean == TRUE) {
       p <- p +
         stat_summary(fun = "mean", geom = "crossbar", linewidth = 0.2,
-                     position = position_jitterdodge(jitter.width = jitter_width))
+                     position = position_jitterdodge(jitter.width = jitter_width),
+                     show.legend = FALSE)
     }
     if (!is.null(path_output)) {
       ggsave(
