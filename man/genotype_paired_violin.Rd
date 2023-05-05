@@ -15,7 +15,7 @@ genotype_paired_violin(
   color_values = hue_pal()(200),
   shape_values = rep(21, 200),
   fill_values = hue_pal()(200),
-  path_output,
+  path_output = here(),
   w = 10,
   h = 5,
   save_plot = FALSE,

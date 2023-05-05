@@ -115,11 +115,11 @@ facs_boxplot(
 
 \item{print_plot}{boolean indicating if the plot is printed or not. Default to TRUE.}
 
-\item{title.i}{title of the plot}
+\item{jitter_width}{width of the points}
 
-\item{color_breaks}{takes the limits as input and returns breaks as output}
+\item{plot_mean}{boolean to plot the mean}
 
-\item{color_labels}{takes the breaks as input and returns labels as output}
+\item{y_label}{default to waiver. Could be scientific_format()}
 }
 \value{
 plot file in data folder
