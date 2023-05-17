@@ -3,6 +3,7 @@
 #'
 #' @param table tidy table with data coming from the analysis. Columns: genotype, value and experiment (time, mice, treatment, marker, stat, cell)
 #' @param genotype_levels vector with all the genotypes all the analysis
+#' @param genotype_labels vector with all the labels of the genotypes all the analysis. Default to genotype_levels
 #' @param strain_levels ordered levels to plot. Default to VHL groups
 #' @param group_diff text to remove from the genotype column to generate the strain by which the relativation groups will be generated. Default to "-WT|-KO"
 #' @param group_control text that identify the group to relativize. Should be included inside group_diff. Default to "WT"
@@ -26,6 +27,7 @@
 #' @import here
 #' @import tidyverse
 #' @import ggthemes
+#' @import ggtext
 #'
 #'
 #' @return plot file in data folder
@@ -43,6 +45,7 @@
 FC_bar <-
   function(table,
            genotype_levels = c("WT", "KO"),
+           genotype_labels = genotype_levels,
            strain_levels =  c("VHL", "VHL-HIF1a", "VHL-HIF2a", "VHL-HIF1a-HIF2a"),
            group_diff = "-WT|-KO",
            group_control = "WT",
@@ -57,7 +60,7 @@ FC_bar <-
            shape_values = rep(21, 200),
            fill_values = hue_pal()(200),
            plot_stat = TRUE,
-           path_output,
+           path_output = here(),
            w = 10,
            h = 5,
            save_plot = FALSE,
@@ -72,6 +75,7 @@ FC_bar <-
                              ordered = TRUE)) %>%
       mutate(genotype = factor(genotype,
                                levels = genotype_levels,
+                               labels = genotype_labels,
                                ordered = TRUE))
 
     p <- table1 %>%
@@ -90,15 +94,15 @@ FC_bar <-
                alpha = .3,
                fun = mean) +
       geom_errorbar(stat = "summary",
-                    width = 0.25,
-                    position = identity_bar) +
+                    width = 0.5,
+                    position = position_dodge(1)) +
       geom_point(
         aes(x = strain),
         size = 2,
         stroke = 0.5,
         position =
           position_jitterdodge(
-            jitter.width = 2.5,
+            jitter.width = 1,
             jitter.height = 0,
             dodge.width = dg
           )
@@ -111,11 +115,11 @@ FC_bar <-
         legend.position = "top",
         legend.background = element_rect(colour = "transparent",
                                          fill = "transparent"),
-        legend.title = element_text(face = "plain", size = 9),
-        legend.text = element_text(size = 9),
+        legend.title = element_markdown(face = "plain", size = 9),
+        legend.text = element_markdown(size = 9),
         axis.title.x = element_blank(),
         axis.ticks.x = element_blank(),
-        plot.title = element_text(face = "plain", size = 10),
+        plot.title = element_markdown(face = "plain", size = 10),
         plot.background = element_rect(colour = NA,
                                        fill = "transparent")
       ) +
