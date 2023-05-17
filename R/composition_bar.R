@@ -23,6 +23,9 @@
 #' @param h high of the output plot
 #' @param save_plot Boolean indicating if the plot is saved or not. Default to FALSE.
 #' @param print_plot Boolean indicating if the plot is printed or not. Default to TRUE.
+#' @param genotype_labels label of the genotypes
+#' @param genotype_percentage genotype to show the percentage
+#' @param stat_comparisons comparisons to be made
 #'
 #' @import here
 #' @import tidyverse
@@ -38,7 +41,6 @@
 #' plot %>%
 #' FC_bar(genotype_levels = VHL_table$genotypes,
 #' color_values = VHL_table$palette_color,
-#' shape_values = VHL_table$palette_shape,
 #' fill_values = VHL_table$palette_fill)
 #'
 #'
@@ -46,7 +48,9 @@ composition_bar <-
   function(table,
            plot_cell = "AMs",
            genotype_levels = c("WT", "KO"),
-           strain_levels =  c("VHL", "VHL-HIF1a", "VHL-HIF2a", "VHL-HIF1a-HIF2a"),
+           genotype_labels = c("WT", "KO"),
+           strain_levels =  c("WT", "KO"),
+           genotype_percentage = c("WT", "KO"),
            origin_diff = "-host|-transplant|-SJ",
            group_diff = "-WT|-KO",
            last_origin = "transplant",
@@ -60,6 +64,7 @@ composition_bar <-
            fill_values = hue_pal()(200),
            plot_stat = TRUE,
            path_output = NULL,
+           stat_comparisons = c("WT", "KO"),
            w = 10,
            h = 5,
            save_plot = FALSE,
@@ -127,71 +132,18 @@ composition_bar <-
                                levels = genotype_levels,
                                ordered = TRUE))
 
-    ## Bar plot of cumulative frequences
+    ## Bar plot of cumulative frequencies
     p <- table_mean %>%
       mutate(genotype = factor(
         genotype,
-        ### Sort levels in reverse order to plot correctly the cumulative sum
-        ### TODO make genotype levels order it more general
-        levels = c(
-          "VHL-WT-transplant",
-          "VHL-KO-transplant",
-          "VHL-HIF1a-WT-transplant",
-          "VHL-HIF1a-KO-transplant",
-          "VHL-HIF2a-WT-transplant",
-          "VHL-HIF2a-KO-transplant",
-          "VHL-HIF1a-HIF2a-WT-transplant",
-          "VHL-HIF1a-HIF2a-KO-transplant",
-          "VHL-WT-host",
-          "VHL-KO-host",
-          "VHL-HIF1a-WT-host",
-          "VHL-HIF1a-KO-host",
-          "VHL-HIF2a-WT-host",
-          "VHL-HIF2a-KO-host",
-          "VHL-HIF1a-HIF2a-WT-host",
-          "VHL-HIF1a-HIF2a-KO-host",
-          "VHL-WT-SJ",
-          "VHL-KO-SJ",
-          "VHL-HIF1a-WT-SJ",
-          "VHL-HIF1a-KO-SJ",
-          "VHL-HIF2a-WT-SJ",
-          "VHL-HIF2a-KO-SJ",
-          "VHL-HIF1a-HIF2a-WT-SJ",
-          "VHL-HIF1a-HIF2a-KO-SJ"
-        ),
-        labels = c(
-          "Control-<i>Vhl</i><sup>fl/fl</sup>",
-          "CD11c\u0394<i>Vhl</i>",
-          "Control-<i>Vhl</i><sup>fl/fl</sup><i>Hif1a</i><sup>fl/fl</sup>",
-          "CD11c\u0394<i>Vhl</i>\u0394<i>Hif1a</i>",
-          "Control-<i>Vhl</i><sup>fl/fl</sup><i>Hif2a</i><sup>fl/fl</sup>",
-          "CD11c\u0394<i>Vhl</i>\u0394<i>Hif2a</i>",
-          "Control-<i>Vhl</i><sup>fl/fl</sup><i>Hif1a</i><sup>fl/fl</sup><i>Hif2a</i><sup>fl/fl</sup>",
-          "CD11c\u0394<i>Vhl</i>\u0394<i>Hif1a</i>\u0394<i>Hif2a</i>",
-          "Control-WT",
-          "Control-WT",
-          "Control-WT",
-          "Control-WT",
-          "Control-WT",
-          "Control-WT",
-          "Control-WT",
-          "Control-WT",
-          "Host",
-          "Host",
-          "Host",
-          "Host",
-          "Host",
-          "Host",
-          "Host",
-          "Host"
-        )
+        levels = genotype_levels,
+        labels = genotype_labels
       )) %>%
       ggplot(aes(
         fct_rev(strain),
         value,
         fill = genotype,
-        color = genotype,
-        shape = genotype
+        color = genotype
       )) +
       geom_bar(
         position = "stack",
@@ -217,15 +169,14 @@ composition_bar <-
         plot.background = element_rect(colour = NA,
                                        fill = "transparent"),
         axis.title.y = element_markdown(),
-        axis.title.x = element_markdown()
+        axis.title.x = element_markdown(),
+        panel.grid.major.y = element_blank()
       ) +
 
       ### TODO make genotype levels order it more general
-      scale_color_manual(values = VHL_table$palette_color[
-        c(10, 12, 14, 16, 18, 20, 22, 24, 9, 35)],
+      scale_color_manual(values = color_values,
                          drop = FALSE) +
-      scale_fill_manual(values =  VHL_table$palette_fill[
-        c(10, 12, 14, 16, 18, 20, 22, 24, 9, 35)],
+      scale_fill_manual(values =  fill_values,
                         drop = FALSE) +
       geom_errorbar(aes(ymin = SDpos, ymax = SDpos + SD),
                     width = 0.4,
@@ -234,27 +185,16 @@ composition_bar <-
       ### TODO selections more general
       geom_text(
         aes(label = ifelse(
-          genotype %in% c(
-            "Control-<i>Vhl</i><sup>fl/fl</sup>",
-            "CD11c\u0394<i>Vhl</i>",
-            "Control-<i>Vhl</i><sup>fl/fl</sup><i>Hif1a</i><sup>fl/fl</sup>",
-            "CD11c\u0394<i>Vhl</i>\u0394<i>Hif1a</i>",
-            "Control-<i>Vhl</i><sup>fl/fl</sup><i>Hif2a</i><sup>fl/fl</sup>",
-            "CD11c\u0394<i>Vhl</i>\u0394<i>Hif2a</i>",
-            "Control-<i>Vhl</i><sup>fl/fl</sup><i>Hif1a</i><sup>fl/fl</sup><i>Hif2a</i><sup>fl/fl</sup>",
-            "CD11c\u0394<i>Vhl</i>\u0394<i>Hif1a</i>\u0394<i>Hif2a</i>"
-          ),
+          genotype %in% genotype_percentage,
           paste0(round(value, 0), "%"),
           NA
         )),
         position = position_stack(vjust = 0.5),
         show.legend = FALSE,
-        # fill = "white",
         color = "black",
         size = 3
       ) +
       labs(
-        shape = " ",
         fill = " ",
         color = " ",
         x = x_lab,
@@ -264,12 +204,7 @@ composition_bar <-
     ## Plot text from statistic
     p <- p +
       stat_compare_means(
-        comparisons = list(
-          c("VHL-WT", "VHL-KO"),
-          c("VHL-HIF1a-WT", "VHL-HIF1a-KO"),
-          c("VHL-HIF2a-WT", "VHL-HIF2a-KO"),
-          c("VHL-HIF1a-HIF2a-WT", "VHL-HIF1a-HIF2a-KO")
-        ),
+        comparisons = stat_comparisons,
         hide.ns = TRUE,
         step.increase = 0,
         show.legend = FALSE,
