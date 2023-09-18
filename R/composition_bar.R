@@ -112,7 +112,7 @@ composition_bar <-
       group_by(mice, stat, cell, marker, time) %>%
       mutate(total = cumsum(value)) %>%
       filter(treatment == last_origin) %>%
-      select(mice, stat, cell, marker, time, total)
+      dplyr::select(mice, stat, cell, marker, time, total)
 
     ## Relativize groups to make 100% total sum in each chimera group
     perc <-
@@ -173,7 +173,8 @@ composition_bar <-
         panel.grid.major.y = element_blank()
       ) +
 
-      ### TODO make genotype levels order it more general
+      #
+      ## TODO make genotype levels order it more general
       scale_color_manual(values = color_values,
                          drop = FALSE) +
       scale_fill_manual(values =  fill_values,
